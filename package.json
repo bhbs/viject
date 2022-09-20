@@ -1,0 +1,58 @@
+{
+  "name": "viject",
+  "type": "module",
+  "version": "0.0.9",
+  "description": "A tool for migrating your React app from react-scripts (Create React App) to Vite",
+  "author": "bhbs <bhbstar.me@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/bhbs/viject",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhbs/viject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bhbs/viject/issues"
+  },
+  "keywords": [
+    "vite",
+    "vitest",
+    "react",
+    "craete-react-app",
+    "react-scripts"
+  ],
+  "bin": {
+    "viject": "bin/viject.js"
+  },
+  "files": [
+    "assets",
+    "bin",
+    "dist"
+  ],
+  "engines": {
+    "node": ">=14.18.0"
+  },
+  "scripts": {
+    "ci": "rome ci",
+    "ts": "tsc",
+    "build": "tsc",
+    "dev": "tsc --sourceMap && node --enable-source-maps dist/viject.js"
+  },
+  "dependencies": {
+    "acorn": "^8.8.0",
+    "acorn-jsx": "^5.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.16",
+    "rome": "^0.9.2-next",
+    "typescript": "^4.8.3"
+  },
+  "viteDependencies": {
+    "@vitejs/plugin-react": "^2.1.0",
+    "happy-dom": "^6.0.4",
+    "vite": "^3.1.0",
+    "vite-plugin-pwa": "^0.12.7",
+    "vite-plugin-svgr": "^2.2.1",
+    "vite-tsconfig-paths": "^3.5.0",
+    "vitest": "^0.23.2"
+  }
+}
