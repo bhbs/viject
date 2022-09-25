@@ -33,6 +33,9 @@
   },
   "scripts": {
     "ci": "rome ci",
+    "lint": "npm run lint:cspell; npm run lint:rome",
+    "lint:rome": "rome ci src",
+    "lint:cspell": "cspell --gitignore '**'",
     "ts": "tsc",
     "build": "tsc",
     "dev": "tsc --sourceMap && node --enable-source-maps dist/viject.js"
