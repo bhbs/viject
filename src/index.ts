@@ -1,7 +1,7 @@
 import { existsSync, copyFileSync } from "node:fs";
 import {
-	appViteCpnfig,
-	ownViteCpnfig,
+	appViteConfig,
+	ownViteConfig,
 	appIndexHTML,
 	ownIndexHTML,
 } from "./paths.js";
@@ -14,8 +14,8 @@ checkGitStatus();
 overWritePackageJson();
 overWriteDTS();
 
-if (!existsSync(appViteCpnfig)) {
-	copyFileSync(ownViteCpnfig, appViteCpnfig);
+if (!existsSync(appViteConfig)) {
+	copyFileSync(ownViteConfig, appViteConfig);
 }
 
 if (!existsSync(appIndexHTML)) {
