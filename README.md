@@ -13,6 +13,16 @@ cd <YOUR_APP>
 npx viject
 ```
 
+## How it works
+
+1. Remove `react-scripts` from `package.json`
+1. Rewrite npm scripts and dependencies for Vite
+1. Remove `react-scripts` from `react-app-env.d.ts`
+1. Rewrite `react-app-env.d.ts` for CRA compatibility
+1. Add `vite.config.ts`
+1. Add `index.html`
+1. Transform `.js` files including JSX into `.jsx`
+
 ## Supported features
 
 - [x] Using HTTPS in Development
