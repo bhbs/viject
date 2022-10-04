@@ -41,7 +41,7 @@
     "lint:cspell": "cspell --gitignore '**'",
     "ts": "tsc",
     "build": "tsc",
-    "dev": "tsc --sourceMap && node --enable-source-maps dist/viject.js"
+    "test": "./tests/scripts/exec.sh"
   },
   "dependencies": {
     "acorn": "^8.8.0",
