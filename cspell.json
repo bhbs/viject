@@ -13,5 +13,6 @@
     "USEPOLLING",
     "viject",
     "vitepress"
-  ]
+  ],
+  "ignorePaths": ["tests/projects"]
 }
