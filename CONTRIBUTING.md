@@ -9,12 +9,12 @@ I truly appreciate contributions in the form of:
 - Fixing typos
 - Improving docs
 - Refactoring codes
-- Triaging [issues](https://github.com/bhbs/viject/issues).
+- Opening [issues](https://github.com/bhbs/viject/issues)
+- Triaging issues
 - Sharing your opinion on issues.
 
 ## Issues
 
-- Before opening a new issue, look for existing issues (even closed ones).
 - If you're reporting a bug, include as much information as possible. Ideally, include a test case that reproduces the bug. For example, a [Runkit](https://runkit.com) or [repl.it](https://repl.it) playground.
 
 ## 👨‍💻 Setup
