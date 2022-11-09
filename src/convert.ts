@@ -17,8 +17,8 @@ function isJsx(source: string) {
 }
 
 export const convertJS2JSX = () => {
-	const files = readdirSyncRecursively("src").filter(
-		(file) => /\.js$/.test(file),
+	const files = readdirSyncRecursively("src").filter((file) =>
+		/\.js$/.test(file),
 	);
 	files.forEach((file: string) => {
 		const code = readFileSync(file, "utf-8");

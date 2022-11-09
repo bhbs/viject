@@ -6,14 +6,11 @@ export const overWritePackageJson = () => {
 	const ownPackage = JSON.parse(readFileSync(ownPackageJson, "utf-8"));
 	const appPackage = JSON.parse(readFileSync(appPackageJson, "utf-8"));
 
-	if (appPackage.dependencies && appPackage.dependencies["react-scripts"]) {
+	if (appPackage.dependencies?.["react-scripts"]) {
 		appPackage.dependencies["react-scripts"] = undefined;
 	}
 
-	if (
-		appPackage.devDependencies &&
-		appPackage.devDependencies["react-scripts"]
-	) {
+	if (appPackage.devDependencies?.["react-scripts"]) {
 		appPackage.devDependencies["react-scripts"] = undefined;
 	}
 
