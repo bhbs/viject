@@ -47,7 +47,7 @@ npx viject
 - [ ] Adding Relay (https://create-react-app.dev/docs/adding-relay)
 - [x] Adding a Router
 - [x] Adding Custom Environment Variables
-- [x] Making a Progressive Web App
+- [ ] Making a Progressive Web App
 - [x] Measuring Performance
 - [ ] Creating a Production Build (https://create-react-app.dev/docs/production-build)
 

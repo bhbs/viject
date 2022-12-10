@@ -4,7 +4,6 @@ import { existsSync, readFileSync } from "node:fs"
 import { defineConfig, loadEnv, Plugin } from "vite"
 import react from "@vitejs/plugin-react"
 import tsconfigPaths from "vite-tsconfig-paths"
-import { VitePWA } from "vite-plugin-pwa"
 import svgr from "vite-plugin-svgr"
 
 // https://vitejs.dev/config/
@@ -23,7 +22,6 @@ export default defineConfig(({ mode }) => {
 			buildPlugin(),
 			basePlugin(),
 			importPrefixPlugin(),
-			pwaPlugin(),
 			htmlPlugin(mode),
 			testPlugin(),
 		]
@@ -154,20 +152,6 @@ function importPrefixPlugin(): Plugin {
 				},
 			}
 		}
-	}
-}
-
-// Setup PWA with .src/service-worker.js
-function pwaPlugin(): Plugin {
-	return {
-		name: 'pwa-plugin',
-		...VitePWA({
-			srcDir: "src",
-			filename: "service-worker.js",
-			injectManifest: {
-				maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-			},
-		})
 	}
 }
 
