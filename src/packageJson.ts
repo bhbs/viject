@@ -18,8 +18,19 @@ export const overWritePackageJson = () => {
 		appPackage.devDependencies = {};
 	}
 
-	Object.keys(ownPackage.viteDependencies).forEach((key) => {
-		appPackage.devDependencies[key] = ownPackage.viteDependencies[key];
+	const viteDeps = [
+		"@vitejs/plugin-react",
+		"happy-dom",
+		"vite",
+		"vite-plugin-svgr",
+		"vite-tsconfig-paths",
+		"vitest",
+	];
+
+	Object.keys(ownPackage.devDependencies).forEach((key) => {
+		if (viteDeps.includes(key)) {
+			appPackage.devDependencies[key] = ownPackage.devDependencies[key];
+		}
 	});
 
 	Object.entries(appPackage.scripts)
