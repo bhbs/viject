@@ -6,6 +6,7 @@ on:
     branches: [main]
 env:
   PROJECT: projects/kitchensink/
+  REACT_APP_SHELL_ENV_MESSAGE: REACT_APP_SHELL_ENV_MESSAGE
 jobs:
   test:
     timeout-minutes: 10
@@ -25,7 +26,10 @@ jobs:
           key: ${{ env.PROJECT }}node_modules-${{ hashFiles('package-lock.json') }}
 
       - run: npm install
+      - run: npm run build
       - run: npx playwright install --with-deps
+      - run: node ../../bin/viject.js
+        working-directory: ${{ env.PROJECT }}
       - run: npm install
         working-directory: ${{ env.PROJECT }}
 
