@@ -16,7 +16,7 @@ const resolveOwn = (relativePath: string) =>
 export const appIndexHTML = resolveApp("index.html");
 export const oldIndexHTML = resolveApp("public/index.html");
 export const appViteConfig = resolveApp("vite.config.ts");
-export const ownViteConfig = resolveOwn("assets/vite.config.ts");
+export const appTsConfig = resolveApp("tsconfig.json");
 export const appPackageJson = resolveApp("package.json");
 export const ownPackageJson = resolveOwn("package.json");
 export const appTypeDeclarations = resolveApp("src/react-app-env.d.ts");

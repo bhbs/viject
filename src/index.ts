@@ -1,16 +1,15 @@
-import { existsSync, copyFileSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { intro, outro, spinner, cancel } from "@clack/prompts";
-import {
-	appViteConfig,
-	ownViteConfig,
-	appIndexHTML,
-	oldIndexHTML,
-} from "./paths.js";
+import { appViteConfig, appIndexHTML, oldIndexHTML } from "./paths.js";
 import { convertJS2JSX } from "./convert.js";
 import { checkGitStatus } from "./git.js";
 import { overWritePackageJson } from "./packageJson.js";
 import { overWriteDTS } from "./dts.js";
 import { moveIndexHTML } from "./html.js";
+import { writeViteConfig } from "./viteConfig.js";
+import { getOptions } from "./options.js";
+
+const options = getOptions();
 
 intro("Start migrating...");
 
@@ -41,10 +40,10 @@ overWriteDTS();
 overWriteDTSStep.stop("Rewriting d.ts files: Done");
 
 if (!existsSync(appViteConfig)) {
-	const copyViteConfigStep = spinner();
-	copyViteConfigStep.start("Copying vite.config.js");
-	copyFileSync(ownViteConfig, appViteConfig);
-	copyViteConfigStep.stop("Copying vite.config.js: Done");
+	const writeViteConfigStep = spinner();
+	writeViteConfigStep.start("Writing vite.config.js");
+	writeViteConfig(options);
+	writeViteConfigStep.stop("Writing vite.config.js: Done");
 }
 
 if (existsSync(oldIndexHTML) && !existsSync(appIndexHTML)) {
