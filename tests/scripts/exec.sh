@@ -5,7 +5,7 @@ fi
 
 npm run build --sourceMap
 cd projects/kitchensink
-node --enable-source-maps ../../../bin/viject.js
+node --enable-source-maps ../../bin/viject.js
 
 npm install
 npm test run
