@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { BaseUrl } from "./features/config/BaseUrl";
 import { ExpandEnvVariables } from "./features/env/ExpandEnvVariables";
 import { FileEnvVariables } from "./features/env/FileEnvVariables";
@@ -17,55 +17,63 @@ import { SvgComponent } from "./features/webpack/SvgComponent";
 import { SvgInclusion } from "./features/webpack/SvgInclusion";
 import { SvgInCss } from "./features/webpack/SvgInCss";
 
+// removed:
+//   LinkedModules
+//   NoExtInclusion
+//   UnknownExtInclusion
+const features = {
+	"css-inclusion": <CssInclusion />,
+	"css-modules-inclusion": <CssModulesInclusion />,
+	"scss-inclusion": <ScssInclusion />,
+	"scss-modules-inclusion": <ScssModulesInclusion />,
+	"sass-inclusion": <SassInclusion />,
+	"sass-modules-inclusion": <SassModulesInclusion />,
+	"file-env-variables": <FileEnvVariables />,
+	"image-inclusion": <ImageInclusion />,
+	"json-inclusion": <JsonInclusion />,
+	"public-url": <PublicUrl />,
+	"shell-env-variables": <ShellEnvVariables />,
+	"svg-inclusion": <SvgInclusion />,
+	"svg-component": <SvgComponent />,
+	"svg-in-css": <SvgInCss />,
+	"expand-env-variables": <ExpandEnvVariables />,
+	"base-url": <BaseUrl />,
+	"dynamic-import": <DynamicImport />,
+};
+
 const App = () => {
-	const Feature = useMemo(() => {
-		const hash = window.location.hash;
-		const feature = hash.slice(1);
-		// removed:
-		//   LinkedModules
-		//   NoExtInclusion
-		//   UnknownExtInclusion
-		switch (feature) {
-			case "css-inclusion":
-				return <CssInclusion />;
-			case "css-modules-inclusion":
-				return <CssModulesInclusion />;
-			case "scss-inclusion":
-				return <ScssInclusion />;
-			case "scss-modules-inclusion":
-				return <ScssModulesInclusion />;
-			case "sass-inclusion":
-				return <SassInclusion />;
-			case "sass-modules-inclusion":
-				return <SassModulesInclusion />;
-			case "file-env-variables":
-				return <FileEnvVariables />;
-			case "image-inclusion":
-				return <ImageInclusion />;
-			case "json-inclusion":
-				return <JsonInclusion />;
-			case "public-url":
-				return <PublicUrl />;
-			case "shell-env-variables":
-				return <ShellEnvVariables />;
-			case "svg-inclusion":
-				return <SvgInclusion />;
-			case "svg-component":
-				return <SvgComponent />;
-			case "svg-in-css":
-				return <SvgInCss />;
-			case "expand-env-variables":
-				return <ExpandEnvVariables />;
-			case "base-url":
-				return <BaseUrl />;
-			case "dynamic-import":
-				return <DynamicImport />;
-			default:
-				return null;
-		}
+	const hash = window.location.hash;
+	const feature = hash.slice(1) as keyof typeof features;
+	const [featureState, setFeatureState] = useState(feature);
+
+	const Links = useMemo(() => {
+		return (
+			<ul>
+				{Object.entries(features).map(([feature]) => (
+					<li key={feature}>
+						{/* rome-ignore lint/a11y/useValidAnchor: <explanation> */}
+						<a
+							href={`#${feature}`}
+							onClick={() => setFeatureState(feature as keyof typeof features)}
+						>
+							{feature}
+						</a>
+					</li>
+				))}
+			</ul>
+		);
 	}, []);
 
-	return Feature;
+	const Feature = useMemo(() => {
+		return features[featureState] || null;
+	}, [featureState]);
+
+	return (
+		<main>
+			{Links}
+			{Feature}
+		</main>
+	);
 };
 
 export default App;
