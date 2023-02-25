@@ -1,14 +1,14 @@
 import React from "react";
 
 export const ExpandEnvVariables = () => (
-	<span id="feature-expand-env-variables">
-		<span id="feature-expand-env-1">{process.env.REACT_APP_BASIC}</span>
-		<span id="feature-expand-env-2">{process.env.REACT_APP_BASIC_EXPAND}</span>
-		<span id="feature-expand-env-3">
+	<ul id="feature-expand-env-variables">
+		<li id="feature-expand-env-1">{process.env.REACT_APP_BASIC}</li>
+		<li id="feature-expand-env-2">{process.env.REACT_APP_BASIC_EXPAND}</li>
+		<li id="feature-expand-env-3">
 			{process.env.REACT_APP_BASIC_EXPAND_SIMPLE}
-		</span>
-		<span id="feature-expand-env-existing">
+		</li>
+		<li id="feature-expand-env-existing">
 			{process.env.REACT_APP_EXPAND_EXISTING}
-		</span>
-	</span>
+		</li>
+	</ul>
 );
