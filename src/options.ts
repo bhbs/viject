@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { appTsConfig } from "./paths";
+import { appTsConfig } from "./paths.js";
 
 export type Options = {
 	ts: boolean;
