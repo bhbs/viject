@@ -1,7 +1,7 @@
 import React from "react";
 
 export const FileEnvVariables = () => (
-	<span>
+	<span id="feature-file-env-variables">
 		<span id="feature-file-env-original-1">
 			{process.env.REACT_APP_ORIGINAL_1}
 		</span>
