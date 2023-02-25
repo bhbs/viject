@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  PROJECT: tests/projects/kitchensink/
+  PROJECT: projects/kitchensink/
 jobs:
   test:
     timeout-minutes: 10
