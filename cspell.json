@@ -4,6 +4,7 @@
   "words": [
     "bhbs",
     "dirents",
+    "kitchensink",
     "outro",
     "peaceiris",
     "Proxying",
@@ -15,5 +16,7 @@
     "viject",
     "vitepress"
   ],
-  "ignorePaths": ["tests/projects"]
+  "ignorePaths": [
+    "projects"
+  ]
 }
