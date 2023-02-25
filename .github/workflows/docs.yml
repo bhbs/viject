@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy docs
 
 on:
   push:
@@ -10,6 +10,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: docs
+      url: https://bhbs.github.io/viject/
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
