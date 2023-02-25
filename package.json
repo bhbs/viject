@@ -44,6 +44,7 @@
     "test": "./tests/scripts/exec.sh"
   },
   "dependencies": {
+    "@clack/prompts": "^0.6.0",
     "acorn": "^8.8.1",
     "acorn-jsx": "^5.3.2"
   },
