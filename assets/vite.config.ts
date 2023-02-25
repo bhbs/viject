@@ -1,15 +1,16 @@
 /// <reference types="vitest" />
-import { resolve } from "node:path"
-import { existsSync, readFileSync } from "node:fs"
-import { defineConfig, loadEnv, Plugin } from "vite"
-import react from "@vitejs/plugin-react"
-import tsconfigPaths from "vite-tsconfig-paths"
-import svgr from "vite-plugin-svgr"
+import { resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { defineConfig, loadEnv, Plugin } from "vite";
+import react from "@vitejs/plugin-react";
+import tsconfigPaths from "vite-tsconfig-paths";
+import svgr from "vite-plugin-svgr";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-	process.env.NODE_ENV ||= mode
-	process.env.PUBLIC_URL ||= JSON.parse(readFileSync("package.json", "utf-8")).homepage || ""
+	process.env.NODE_ENV ||= mode;
+	process.env.PUBLIC_URL ||=
+		JSON.parse(readFileSync("package.json", "utf-8")).homepage || "";
 
 	return {
 		plugins: [
@@ -24,103 +25,90 @@ export default defineConfig(({ mode }) => {
 			importPrefixPlugin(),
 			htmlPlugin(mode),
 			testPlugin(),
-		]
-	}
-})
+		],
+	};
+});
 
 // Expose `process.env` environment variables to your client code
 function envPlugin(): Plugin {
 	return {
-		name: 'env-plugin',
+		name: "env-plugin",
 		config(_, { mode }) {
-			const env = loadEnv(mode, ".", [
-				"REACT_APP_",
-				"NODE_ENV",
-				"PUBLIC_URL"
-			])
+			const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
 			return {
 				define: Object.fromEntries(
-					Object.entries(env).map(([key, value]) => [`process.env.${key}`, JSON.stringify(value)])
-				)
-			}
+					Object.entries(env).map(([key, value]) => [
+						`process.env.${key}`,
+						JSON.stringify(value),
+					]),
+				),
+			};
 		},
-	}
+	};
 }
 
 function devServerPlugin(): Plugin {
 	return {
-		name: 'dev-server-plugin',
+		name: "dev-server-plugin",
 		config: (_, { mode }) => {
-			const {
-				HOST,
-				PORT,
-				HTTPS,
-				SSL_CRT_FILE,
-				SSL_KEY_FILE,
-			} = loadEnv(mode, ".", [
-				"HOST",
-				"PORT",
-				"HTTPS",
-				"SSL_CRT_FILE",
-				"SSL_KEY_FILE",
-			])
-			const https = HTTPS === "true"
+			const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(
+				mode,
+				".",
+				["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"],
+			);
+			const https = HTTPS === "true";
 			return {
 				server: {
 					host: HOST || "localhost",
 					port: parseInt(PORT || "3000", 10),
 					open: true,
-					https: (https && SSL_CRT_FILE && SSL_KEY_FILE) ? {
-						cert: readFileSync(resolve(SSL_CRT_FILE)),
-						key: readFileSync(resolve(SSL_KEY_FILE)),
-					} : https
-				}
-			}
-		}
-	}
+					https:
+						https && SSL_CRT_FILE && SSL_KEY_FILE
+							? {
+									cert: readFileSync(resolve(SSL_CRT_FILE)),
+									key: readFileSync(resolve(SSL_KEY_FILE)),
+							  }
+							: https,
+				},
+			};
+		},
+	};
 }
 
 function buildPlugin(): Plugin {
 	return {
-		name: 'build-plugin',
+		name: "build-plugin",
 		config: (_, { mode }) => {
-			const {
-				BUILD_PATH,
-				GENERATE_SOURCEMAP
-			} = loadEnv(mode, ".", [
+			const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, ".", [
 				"BUILD_PATH",
 				"GENERATE_SOURCEMAP",
-			])
+			]);
 			return {
 				build: {
-					sourcemap: GENERATE_SOURCEMAP === 'true',
-					outDir: BUILD_PATH || "build"
+					sourcemap: GENERATE_SOURCEMAP === "true",
+					outDir: BUILD_PATH || "build",
 				},
-			}
-		}
-	}
+			};
+		},
+	};
 }
 
 function basePlugin(): Plugin {
 	return {
-		name: 'base-plugin',
+		name: "base-plugin",
 		config: (_, { mode }) => {
-			const {
-				PUBLIC_URL
-			} = loadEnv(mode, ".", [
-				"PUBLIC_URL",
-			])
+			const { PUBLIC_URL } = loadEnv(mode, ".", ["PUBLIC_URL"]);
 			return {
-				base: PUBLIC_URL || ""
-			}
-		}
-	}
+				base: PUBLIC_URL || "",
+			};
+		},
+	};
 }
 
 // Vitest configuration compatible with react-scripts
 function testPlugin(): Plugin {
 	return {
-		name: 'test-plugin',
+		name: "test-plugin",
 		config: () => {
 			return {
 				test: {
@@ -135,40 +123,36 @@ function testPlugin(): Plugin {
 						"src/**/*.{test,spec}.{js,jsx,ts,tsx}",
 					],
 				},
-			}
-		}
-	}
+			};
+		},
+	};
 }
 
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
 function importPrefixPlugin(): Plugin {
 	return {
-		name: 'import-prefix-plugin',
+		name: "import-prefix-plugin",
 		config: () => {
 			return {
 				resolve: {
 					alias: [{ find: /^~([^/])/, replacement: "$1" }],
 				},
-			}
-		}
-	}
+			};
+		},
+	};
 }
 
 // Replace %ENV_VARIABLES% in index.html
 function htmlPlugin(mode: string): Plugin {
-	const env = loadEnv(mode, ".", [
-		"REACT_APP_",
-		"NODE_ENV",
-		"PUBLIC_URL"
-	])
+	const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
 	return {
 		name: "html-transform",
 		transformIndexHtml: {
 			enforce: "pre",
 			transform: (html) => {
-				return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match)
+				return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
 			},
 		},
-	}
+	};
 }
