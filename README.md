@@ -75,7 +75,7 @@ https://create-react-app.dev/docs/advanced-configuration
 - [ ] ~~WDS_SOCKET_PORT~~
 - [x] PUBLIC_URL
 - [x] BUILD_PATH
-- [ ] CI
+- [ ] ~~CI~~
 - [ ] ~~REACT_EDITOR~~
 - [ ] ~~CHOKIDAR_USEPOLLING~~
 - [x] GENERATE_SOURCEMAP
