@@ -1,7 +1,7 @@
-import { existsSync, writeFileSync } from "node:fs";
-import typescript from "typescript";
+import { writeFileSync } from "node:fs";
+import { ModuleKind, ScriptTarget, transpileModule } from "typescript";
 import { Options } from "./options.js";
-import { appTsConfig, appViteConfig } from "./paths.js";
+import { appViteConfig } from "./paths.js";
 
 const importDirective = ({ ts }: Options) => `\
 /// <reference types="vitest" />
@@ -193,10 +193,10 @@ ${htmlPlugin}`;
 
 	return options.ts
 		? config
-		: typescript.transpileModule(config, {
+		: transpileModule(config, {
 				compilerOptions: {
-					target: typescript.ScriptTarget.ESNext,
-					module: typescript.ModuleKind.ESNext,
+					target: ScriptTarget.ESNext,
+					module: ModuleKind.ESNext,
 				},
 		  }).outputText;
 };
