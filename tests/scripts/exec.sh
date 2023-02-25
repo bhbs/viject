@@ -4,7 +4,7 @@ if [[ $(git status --porcelain) ]]; then
 fi
 
 npm run build --sourceMap
-cd tests/projects/cra-template-pwa
+cd tests/projects/kitchensink
 node --enable-source-maps ../../../bin/viject.js
 
 npm install
