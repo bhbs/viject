@@ -1,5 +1,5 @@
-import { EOL } from "os";
-import { readFileSync, writeFileSync } from "fs";
+import { EOL } from "node:os";
+import { readFileSync, writeFileSync } from "node:fs";
 import { appPackageJson, ownPackageJson } from "./paths.js";
 
 export const overWritePackageJson = () => {
