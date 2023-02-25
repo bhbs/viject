@@ -155,9 +155,7 @@ function importPrefixPlugin(): Plugin {
 	}
 }
 
-// Read ./public/index.html instead of ./index.html
 // Replace %ENV_VARIABLES% in index.html
-// Insert script tag
 function htmlPlugin(mode: string): Plugin {
 	const env = loadEnv(mode, ".", [
 		"REACT_APP_",
@@ -169,13 +167,7 @@ function htmlPlugin(mode: string): Plugin {
 		transformIndexHtml: {
 			enforce: "pre",
 			transform: (html) => {
-				html = readFileSync("public/index.html", "utf-8")
-				html = html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match)
-				html = html.replace(
-					/<\/head>/,
-					'<script type="module" src="src/index"></script></head>',
-				)
-				return html
+				return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match)
 			},
 		},
 	}

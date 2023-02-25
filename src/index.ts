@@ -1,15 +1,16 @@
-import { existsSync, copyFileSync } from "node:fs";
+import { existsSync, copyFileSync, readFileSync } from "node:fs";
 import { intro, outro, spinner, cancel } from "@clack/prompts";
 import {
 	appViteConfig,
 	ownViteConfig,
 	appIndexHTML,
-	ownIndexHTML,
+	oldIndexHTML,
 } from "./paths.js";
 import { convertJS2JSX } from "./convert.js";
 import { checkGitStatus } from "./git.js";
 import { overWritePackageJson } from "./packageJson.js";
 import { overWriteDTS } from "./dts.js";
+import { moveIndexHTML } from "./html.js";
 
 intro("Start migrating...");
 
@@ -46,11 +47,11 @@ if (!existsSync(appViteConfig)) {
 	copyViteConfigStep.stop("Copying vite.config.js: Done");
 }
 
-if (!existsSync(appIndexHTML)) {
-	const copyIndexHTMLStep = spinner();
-	copyIndexHTMLStep.start("Moving index.html");
-	copyFileSync(ownIndexHTML, appIndexHTML);
-	copyIndexHTMLStep.stop("Moving index.html: Done");
+if (existsSync(oldIndexHTML) && !existsSync(appIndexHTML)) {
+	const moveIndexHTMLStep = spinner();
+	moveIndexHTMLStep.start("Moving index.html");
+	moveIndexHTML();
+	moveIndexHTMLStep.stop("Moving index.html: Done");
 }
 
 const convertJS2JSXStep = spinner();

@@ -14,7 +14,7 @@ const resolveOwn = (relativePath: string) =>
 	resolve(__dirname, "..", relativePath);
 
 export const appIndexHTML = resolveApp("index.html");
-export const ownIndexHTML = resolveOwn("assets/index.html");
+export const oldIndexHTML = resolveApp("public/index.html");
 export const appViteConfig = resolveApp("vite.config.ts");
 export const ownViteConfig = resolveOwn("assets/vite.config.ts");
 export const appPackageJson = resolveApp("package.json");
