@@ -48,6 +48,7 @@
     "acorn-jsx": "^5.3.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.31.1",
     "@types/node": "^18.11.12",
     "@vitejs/plugin-react": "^3.0.0",
     "cspell": "^6.17.0",
