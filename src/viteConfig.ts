@@ -1,5 +1,5 @@
 import { writeFileSync } from "node:fs";
-import { ModuleKind, ScriptTarget, transpileModule } from "typescript";
+import typescript from "typescript";
 import { Options } from "./options.js";
 import { appViteConfig } from "./paths.js";
 
@@ -193,10 +193,10 @@ ${htmlPlugin}`;
 
 	return options.ts
 		? config
-		: transpileModule(config, {
+		: typescript.transpileModule(config, {
 				compilerOptions: {
-					target: ScriptTarget.ESNext,
-					module: ModuleKind.ESNext,
+					target: typescript.ScriptTarget.ESNext,
+					module: typescript.ModuleKind.ESNext,
 				},
 		  }).outputText;
 };
