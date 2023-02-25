@@ -41,7 +41,9 @@
     "lint:cspell": "cspell --gitignore '**'",
     "ts": "tsc",
     "build": "tsc",
-    "test": "./tests/scripts/exec.sh"
+    "test:e2e": "playwright test",
+    "test:unit": "vitest run tests",
+    "test:integration": "./tests/scripts/exec.sh"
   },
   "dependencies": {
     "@clack/prompts": "^0.6.0",
