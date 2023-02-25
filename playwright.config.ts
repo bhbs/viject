@@ -37,8 +37,8 @@ export default defineConfig({
 		},
 	],
 
-	// webServer: {
-	//   command: 'npm run start',
-	//   port: 3000,
-	// },
+	webServer: {
+		command: "cd tests/projects/kitchensink; npm run start",
+		port: 3000,
+	},
 });

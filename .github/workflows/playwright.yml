@@ -14,8 +14,9 @@ jobs:
         with:
           node-version: 18
 
-      - run: npm ci; npx playwright install --with-deps
-      - run: npm ci; npm start
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm ci
         working-directory: tests/projects/kitchensink
 
       - run: npx playwright test
