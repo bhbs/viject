@@ -6,7 +6,7 @@ import { appViteConfig } from "./paths.js";
 const importDirective = ({ ts, setupProxy }: Options) => `\
 /// <reference types="vitest" />
 import { resolve } from "node:path";
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 ${ts ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""}
@@ -123,7 +123,7 @@ function basePlugin(): Plugin {
 }
 `;
 
-const testPlugin = `\
+const testPlugin = ({ setupTestsJs, setupTestsTs }: Options) => `\
 // Vitest configuration compatible with react-scripts
 function testPlugin(): Plugin {
   return {
@@ -133,10 +133,9 @@ function testPlugin(): Plugin {
         test: {
           globals: true,
           environment: "happy-dom",
-          setupFiles:
-            existsSync("src/setupTests.js") || existsSync("src/setupTests.ts")
-              ? ["src/setupTests"]
-              : [],
+          setupFiles: [${
+						setupTestsJs || setupTestsTs ? ` "src/setupTests" ` : ""
+					}],
           include: [
             "src/**/__tests__/**/*.{js,jsx,ts,tsx}",
             "src/**/*.{test,spec}.{js,jsx,ts,tsx}",
@@ -202,7 +201,7 @@ ${envPlugin}
 ${devServerPlugin}
 ${buildPlugin}
 ${basePlugin}
-${testPlugin}
+${testPlugin(options)}
 ${importPrefixPlugin}
 ${options.setupProxy ? setupProxyPlugin : ""}
 ${htmlPlugin}`;

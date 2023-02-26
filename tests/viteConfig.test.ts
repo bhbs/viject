@@ -5,6 +5,8 @@ import { createViteConfig } from "../src/viteConfig";
 const defaultOptions: Options = {
 	ts: false,
 	setupProxy: false,
+	setupTestsJs: false,
+	setupTestsTs: false,
 };
 
 describe("createViteConfig", () => {
@@ -18,6 +20,14 @@ describe("createViteConfig", () => {
 	});
 	it("setupProxy: true", () => {
 		const options = { ...defaultOptions, setupProxy: true };
+		expect(createViteConfig(options)).toMatchSnapshot();
+	});
+	it("setupTestsJs: true", () => {
+		const options = { ...defaultOptions, setupTestsJs: true };
+		expect(createViteConfig(options)).toMatchSnapshot();
+	});
+	it("setupTestsTs: true", () => {
+		const options = { ...defaultOptions, setupTestsTs: true };
 		expect(createViteConfig(options)).toMatchSnapshot();
 	});
 });
