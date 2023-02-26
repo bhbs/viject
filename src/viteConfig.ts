@@ -3,7 +3,7 @@ import typescript from "typescript";
 import { Options } from "./options.js";
 import { appViteConfig } from "./paths.js";
 
-const importDirective = ({ ts }: Options) => `\
+const importDirective = ({ ts, setupProxy }: Options) => `\
 /// <reference types="vitest" />
 import { resolve } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
@@ -11,9 +11,10 @@ import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 ${ts ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""}
 import svgr from "vite-plugin-svgr";
+${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
-const defineConfig = ({ ts }: Options) => `\
+const defineConfig = ({ ts, setupProxy }: Options) => `\
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
 process.env.NODE_ENV ||= mode;
@@ -32,6 +33,7 @@ process.env.PUBLIC_URL ||=
       importPrefixPlugin(),
       htmlPlugin(mode),
       testPlugin(),
+      ${setupProxy ? "setupProxyPlugin()" : ""}
     ],
   };
 });
@@ -163,6 +165,19 @@ function importPrefixPlugin(): Plugin {
 }
 `;
 
+const setupProxyPlugin = `\
+// Configuring the Proxy Manually
+// https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
+function setupProxyPlugin(): Plugin {
+  return {
+    name: "configure-server",
+    configureServer(server) {
+      setupProxy(server.middlewares);
+    },
+  };
+}
+`;
+
 const htmlPlugin = `\
 // Replace %ENV_VARIABLES% in index.html
 function htmlPlugin(mode: string): Plugin {
@@ -189,6 +204,7 @@ ${buildPlugin}
 ${basePlugin}
 ${testPlugin}
 ${importPrefixPlugin}
+${options.setupProxy ? setupProxyPlugin : ""}
 ${htmlPlugin}`;
 
 	return options.ts

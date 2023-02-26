@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { BaseUrl } from "./features/config/BaseUrl";
+import { ProxyMiddleware } from "./features/config/ProxyMiddleware";
 import { ExpandEnvVariables } from "./features/env/ExpandEnvVariables";
 import { FileEnvVariables } from "./features/env/FileEnvVariables";
 import { PublicUrl } from "./features/env/PublicUrl";
@@ -38,6 +39,7 @@ const features = {
 	"svg-in-css": <SvgInCss />,
 	"expand-env-variables": <ExpandEnvVariables />,
 	"base-url": <BaseUrl />,
+	"proxy-middleware": <ProxyMiddleware />,
 	"dynamic-import": <DynamicImport />,
 };
 
