@@ -23,7 +23,7 @@ export const overWritePackageJson = (options: Options) => {
 		"@vitejs/plugin-react",
 		"happy-dom",
 		"vite",
-		"vite-plugin-svgr",
+		...(options.svg ? ["vite-plugin-svgr"] : []),
 		...(options.ts ? ["vite-tsconfig-paths"] : []),
 		"vitest",
 	];

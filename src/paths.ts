@@ -13,6 +13,7 @@ const __dirname = dirname(__filename);
 const resolveOwn = (relativePath: string) =>
 	resolve(__dirname, "..", relativePath);
 
+export const appSrcDir = resolveApp("src");
 export const appIndexHTML = resolveApp("index.html");
 export const oldIndexHTML = resolveApp("public/index.html");
 export const appViteConfig = resolveApp("vite.config.ts");

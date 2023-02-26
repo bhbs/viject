@@ -6,7 +6,6 @@ import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
-import svgr from \\"vite-plugin-svgr\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
@@ -15,7 +14,7 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            svgr(),
+            ,
             ,
             envPlugin(),
             devServerPlugin(),
@@ -147,7 +146,6 @@ import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
-import svgr from \\"vite-plugin-svgr\\";
 import setupProxy from \\"./src/setupProxy\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -157,7 +155,7 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            svgr(),
+            ,
             ,
             envPlugin(),
             devServerPlugin(),
@@ -300,7 +298,6 @@ import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
-import svgr from \\"vite-plugin-svgr\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
@@ -309,7 +306,7 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            svgr(),
+            ,
             ,
             envPlugin(),
             devServerPlugin(),
@@ -441,7 +438,6 @@ import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
-import svgr from \\"vite-plugin-svgr\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
@@ -450,7 +446,7 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            svgr(),
+            ,
             ,
             envPlugin(),
             devServerPlugin(),
@@ -576,6 +572,147 @@ function htmlPlugin(mode) {
 "
 `;
 
+exports[`createViteConfig > svg: true 1`] = `
+"/// <reference types=\\"vitest\\" />
+import { resolve } from \\"node:path\\";
+import { readFileSync } from \\"node:fs\\";
+import { defineConfig, loadEnv } from \\"vite\\";
+import react from \\"@vitejs/plugin-react\\";
+import svgr from \\"vite-plugin-svgr\\";
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+    process.env.NODE_ENV ||= mode;
+    process.env.PUBLIC_URL ||=
+        JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+    return {
+        plugins: [
+            react(),
+            svgr(),
+            ,
+            envPlugin(),
+            devServerPlugin(),
+            buildPlugin(),
+            basePlugin(),
+            importPrefixPlugin(),
+            htmlPlugin(mode),
+            testPlugin(),
+        ],
+    };
+});
+// Expose \`process.env\` environment variables to your client code
+function envPlugin() {
+    return {
+        name: \\"env-plugin\\",
+        config(_, { mode }) {
+            const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
+            return {
+                define: Object.fromEntries(Object.entries(env).map(([key, value]) => [
+                    \`process.env.\${key}\`,
+                    JSON.stringify(value),
+                ])),
+            };
+        },
+    };
+}
+function devServerPlugin() {
+    return {
+        name: \\"dev-server-plugin\\",
+        config: (_, { mode }) => {
+            const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(mode, \\".\\", [\\"HOST\\", \\"PORT\\", \\"HTTPS\\", \\"SSL_CRT_FILE\\", \\"SSL_KEY_FILE\\"]);
+            const https = HTTPS === \\"true\\";
+            return {
+                server: {
+                    host: HOST || \\"localhost\\",
+                    port: parseInt(PORT || \\"3000\\", 10),
+                    open: true,
+                    https: https && SSL_CRT_FILE && SSL_KEY_FILE
+                        ? {
+                            cert: readFileSync(resolve(SSL_CRT_FILE)),
+                            key: readFileSync(resolve(SSL_KEY_FILE)),
+                        }
+                        : https,
+                },
+            };
+        },
+    };
+}
+function buildPlugin() {
+    return {
+        name: \\"build-plugin\\",
+        config: (_, { mode }) => {
+            const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+                \\"GENERATE_SOURCEMAP\\",
+            ]);
+            return {
+                build: {
+                    sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                    outDir: BUILD_PATH || \\"build\\",
+                },
+            };
+        },
+    };
+}
+function basePlugin() {
+    return {
+        name: \\"base-plugin\\",
+        config: (_, { mode }) => {
+            const { PUBLIC_URL } = loadEnv(mode, \\".\\", [\\"PUBLIC_URL\\"]);
+            return {
+                base: PUBLIC_URL || \\"\\",
+            };
+        },
+    };
+}
+// Vitest configuration compatible with react-scripts
+function testPlugin() {
+    return {
+        name: \\"test-plugin\\",
+        config: () => {
+            return {
+                test: {
+                    globals: true,
+                    environment: \\"happy-dom\\",
+                    setupFiles: [],
+                    include: [
+                        \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
+                        \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
+                    ],
+                },
+            };
+        },
+    };
+}
+// To resolve modules from node_modules, you can prefix paths with ~
+// https://create-react-app.dev/docs/adding-a-sass-stylesheet
+function importPrefixPlugin() {
+    return {
+        name: \\"import-prefix-plugin\\",
+        config: () => {
+            return {
+                resolve: {
+                    alias: [{ find: /^~([^/])/, replacement: \\"$1\\" }],
+                },
+            };
+        },
+    };
+}
+// Replace %ENV_VARIABLES% in index.html
+function htmlPlugin(mode) {
+    const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
+    return {
+        name: \\"html-transform\\",
+        transformIndexHtml: {
+            enforce: \\"pre\\",
+            transform: (html) => {
+                return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
+            },
+        },
+    };
+}
+"
+`;
+
 exports[`createViteConfig > ts: true 1`] = `
 "/// <reference types=\\"vitest\\" />
 import { resolve } from \\"node:path\\";
@@ -583,7 +720,7 @@ import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv, Plugin } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
 import tsconfigPaths from \\"vite-tsconfig-paths\\";
-import svgr from \\"vite-plugin-svgr\\";
+
 
 
 // https://vitejs.dev/config/
@@ -595,7 +732,7 @@ process.env.PUBLIC_URL ||=
   return {
     plugins: [
       react(),
-      svgr(),
+      ,
       tsconfigPaths(),
       envPlugin(),
       devServerPlugin(),

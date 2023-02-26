@@ -3,18 +3,18 @@ import typescript from "typescript";
 import { Options } from "./options.js";
 import { appViteConfig } from "./paths.js";
 
-const importDirective = ({ ts, setupProxy }: Options) => `\
+const importDirective = ({ ts, svg, setupProxy }: Options) => `\
 /// <reference types="vitest" />
 import { resolve } from "node:path";
 import { readFileSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 ${ts ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""}
-import svgr from "vite-plugin-svgr";
+${svg ? 'import svgr from "vite-plugin-svgr";' : ""}
 ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
-const defineConfig = ({ ts, setupProxy }: Options) => `\
+const defineConfig = ({ ts, svg, setupProxy }: Options) => `\
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
 process.env.NODE_ENV ||= mode;
@@ -24,7 +24,7 @@ process.env.PUBLIC_URL ||=
   return {
     plugins: [
       react(),
-      svgr(),
+      ${svg ? "svgr()" : ""},
       ${ts ? "tsconfigPaths()" : ""},
       envPlugin(),
       devServerPlugin(),

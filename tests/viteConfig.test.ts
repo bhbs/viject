@@ -4,6 +4,7 @@ import { createViteConfig } from "../src/viteConfig";
 
 const defaultOptions: Options = {
 	ts: false,
+	svg: false,
 	setupProxy: false,
 	setupTestsJs: false,
 	setupTestsTs: false,
@@ -16,6 +17,10 @@ describe("createViteConfig", () => {
 	});
 	it("ts: true", () => {
 		const options = { ...defaultOptions, ts: true };
+		expect(createViteConfig(options)).toMatchSnapshot();
+	});
+	it("svg: true", () => {
+		const options = { ...defaultOptions, svg: true };
 		expect(createViteConfig(options)).toMatchSnapshot();
 	});
 	it("setupProxy: true", () => {
