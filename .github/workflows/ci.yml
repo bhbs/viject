@@ -66,4 +66,4 @@ jobs:
           path: "node_modules"
           key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Run integration test
-        run: npm test:integration
+        run: npm run test:integration
