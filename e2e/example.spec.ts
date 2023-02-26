@@ -17,6 +17,7 @@ const features = [
 	"svg-in-css",
 	"expand-env-variables",
 	"base-url",
+	"proxy-middleware",
 	"dynamic-import",
 ];
 

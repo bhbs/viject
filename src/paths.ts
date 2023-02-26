@@ -19,5 +19,6 @@ export const appViteConfig = resolveApp("vite.config.ts");
 export const appTsConfig = resolveApp("tsconfig.json");
 export const appPackageJson = resolveApp("package.json");
 export const ownPackageJson = resolveOwn("package.json");
+export const appSetupProxy = resolveApp("src/setupProxy.js");
 export const appTypeDeclarations = resolveApp("src/react-app-env.d.ts");
 export const ownTypeDeclarations = resolveOwn("assets/react-app.d.ts");
