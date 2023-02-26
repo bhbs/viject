@@ -9,8 +9,10 @@ import react from \\"@vitejs/plugin-react\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
-    process.env.PUBLIC_URL ||=
-        JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+    const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
+        ? homepage
+        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
         plugins: [
             react(),
@@ -148,8 +150,10 @@ import setupProxy from \\"./src/setupProxy\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
-    process.env.PUBLIC_URL ||=
-        JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+    const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
+        ? homepage
+        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
         plugins: [
             react(),
@@ -297,8 +301,10 @@ import react from \\"@vitejs/plugin-react\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
-    process.env.PUBLIC_URL ||=
-        JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+    const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
+        ? homepage
+        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
         plugins: [
             react(),
@@ -435,8 +441,10 @@ import react from \\"@vitejs/plugin-react\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
-    process.env.PUBLIC_URL ||=
-        JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+    const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
+        ? homepage
+        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
         plugins: [
             react(),
@@ -574,8 +582,10 @@ import svgr from \\"vite-plugin-svgr\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     process.env.NODE_ENV ||= mode;
-    process.env.PUBLIC_URL ||=
-        JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+    const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
+        ? homepage
+        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
         plugins: [
             react(),
@@ -716,9 +726,13 @@ import tsconfigPaths from \\"vite-tsconfig-paths\\";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-process.env.NODE_ENV ||= mode;
-process.env.PUBLIC_URL ||=
-  JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\")).homepage || \\"\\";
+  process.env.NODE_ENV ||= mode;
+  const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+  process.env.PUBLIC_URL ||= \`\${
+    homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
+      ? homepage
+      : \`/\${homepage}\`
+  }\`.replace(/\\\\/$/, \\"\\");
 
   return {
     plugins: [

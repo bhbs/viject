@@ -17,9 +17,13 @@ ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 const defineConfig = ({ ts, svg, setupProxy }: Options) => `\
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-process.env.NODE_ENV ||= mode;
-process.env.PUBLIC_URL ||=
-  JSON.parse(readFileSync("package.json", "utf-8")).homepage || "";
+  process.env.NODE_ENV ||= mode;
+  const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"));
+  process.env.PUBLIC_URL ||= \`\${
+    homepage && (homepage.startsWith("http") || homepage.startsWith("/"))
+      ? homepage
+      : \`/\${homepage}\`
+  }\`.replace(/\\/$/, "");
 
   return {
     plugins: [
