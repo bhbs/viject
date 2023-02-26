@@ -24,8 +24,8 @@ process.env.PUBLIC_URL ||=
   return {
     plugins: [
       react(),
-      ${svg ? "svgr()" : ""},
-      ${ts ? "tsconfigPaths()" : ""},
+      ${svg ? "svgr()," : ""}
+      ${ts ? "tsconfigPaths()," : ""}
       envPlugin(),
       devServerPlugin(),
       buildPlugin(),
@@ -33,7 +33,7 @@ process.env.PUBLIC_URL ||=
       importPrefixPlugin(),
       htmlPlugin(mode),
       testPlugin(),
-      ${setupProxy ? "setupProxyPlugin()" : ""}
+      ${setupProxy ? "setupProxyPlugin()," : ""}
     ],
   };
 });

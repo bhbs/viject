@@ -14,8 +14,6 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            ,
-            ,
             envPlugin(),
             devServerPlugin(),
             buildPlugin(),
@@ -155,8 +153,6 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            ,
-            ,
             envPlugin(),
             devServerPlugin(),
             buildPlugin(),
@@ -164,7 +160,7 @@ export default defineConfig(({ mode }) => {
             importPrefixPlugin(),
             htmlPlugin(mode),
             testPlugin(),
-            setupProxyPlugin()
+            setupProxyPlugin(),
         ],
     };
 });
@@ -306,8 +302,6 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            ,
-            ,
             envPlugin(),
             devServerPlugin(),
             buildPlugin(),
@@ -446,8 +440,6 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [
             react(),
-            ,
-            ,
             envPlugin(),
             devServerPlugin(),
             buildPlugin(),
@@ -588,7 +580,6 @@ export default defineConfig(({ mode }) => {
         plugins: [
             react(),
             svgr(),
-            ,
             envPlugin(),
             devServerPlugin(),
             buildPlugin(),
@@ -732,7 +723,7 @@ process.env.PUBLIC_URL ||=
   return {
     plugins: [
       react(),
-      ,
+      
       tsconfigPaths(),
       envPlugin(),
       devServerPlugin(),
