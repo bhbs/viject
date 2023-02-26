@@ -67,3 +67,19 @@ jobs:
           key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Run integration test
         run: npm run test:integration
+
+  run-unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    needs: prepare-cache
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - uses: actions/cache@v3
+        with:
+          path: "node_modules"
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Run unit test
+        run: npm run test:unit
