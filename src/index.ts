@@ -31,7 +31,7 @@ checkGitStatusStep.stop("Checking Git status: Done");
 
 const overWritePackageJsonStep = spinner();
 overWritePackageJsonStep.start("Rewriting package.json");
-overWritePackageJson();
+overWritePackageJson(options);
 overWritePackageJsonStep.stop("Rewriting package.json: Done");
 
 const overWriteDTSStep = spinner();

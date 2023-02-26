@@ -1,8 +1,9 @@
 import { EOL } from "node:os";
 import { readFileSync, writeFileSync } from "node:fs";
 import { appPackageJson, ownPackageJson } from "./paths.js";
+import { Options } from "./options.js";
 
-export const overWritePackageJson = () => {
+export const overWritePackageJson = (options: Options) => {
 	const ownPackage = JSON.parse(readFileSync(ownPackageJson, "utf-8"));
 	const appPackage = JSON.parse(readFileSync(appPackageJson, "utf-8"));
 
@@ -23,7 +24,7 @@ export const overWritePackageJson = () => {
 		"happy-dom",
 		"vite",
 		"vite-plugin-svgr",
-		"vite-tsconfig-paths",
+		...(options.ts ? ["vite-tsconfig-paths"] : []),
 		"vitest",
 	];
 
