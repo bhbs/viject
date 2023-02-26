@@ -28,7 +28,7 @@ npm ci
 To test:
 
 ```sh
-npm test
+npm run test:integration
 ```
 
 To check code style:
