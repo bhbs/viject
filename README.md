@@ -49,16 +49,16 @@ npx viject
 - [x] Adding Custom Environment Variables
 - [ ] Making a Progressive Web App
 - [x] Measuring Performance
-- [ ] Creating a Production Build (https://create-react-app.dev/docs/production-build)
+- [x] Creating a Production Build (https://create-react-app.dev/docs/production-build)
 
 ### Testing
 
 - [x] Running Tests
-- [ ] Debugging Tests (https://create-react-app.dev/docs/debugging-tests)
+- [ ] ~~Debugging Tests (https://create-react-app.dev/docs/debugging-tests)~~
 
 ### Back-End Integration
 
-- [ ] Proxying API Requests in Development (https://create-react-app.dev/docs/proxying-api-requests-in-development)
+- [x] Proxying API Requests in Development (https://create-react-app.dev/docs/proxying-api-requests-in-development)
 - [x] Fetching Data with AJAX Requests
 
 ### Advanced Configuration
