@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { intro, outro, spinner, cancel } from "@clack/prompts";
+import { intro, outro, spinner, cancel, note } from "@clack/prompts";
 import { appViteConfig, appIndexHTML, oldIndexHTML } from "./paths.js";
 import { convertJS2JSX } from "./convert.js";
 import { checkGitStatus } from "./git.js";
@@ -57,5 +57,18 @@ const convertJS2JSXStep = spinner();
 convertJS2JSXStep.start("Converting JS to JSX");
 convertJS2JSX();
 convertJS2JSXStep.stop("Converting JS to JSX: Done");
+
+const nextSteps = `\
+// npm
+npm install
+npm dev
+// yarn
+yarn install
+yarn dev
+// pnpm
+pnpm install
+pnpm dev`;
+
+note(nextSteps, "Next steps");
 
 outro("Done ⚡");
