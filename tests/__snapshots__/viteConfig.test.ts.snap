@@ -155,6 +155,7 @@ export default defineConfig(({ mode }) => {
         ? homepage
         : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
+        server: { proxy: {} },
         plugins: [
             react(),
             envPlugin(),
@@ -735,6 +736,7 @@ export default defineConfig(({ mode }) => {
   }\`.replace(/\\\\/$/, \\"\\");
 
   return {
+    
     plugins: [
       react(),
       
