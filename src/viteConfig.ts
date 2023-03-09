@@ -26,6 +26,7 @@ export default defineConfig(({ mode }) => {
   }\`.replace(/\\/$/, "");
 
   return {
+    ${setupProxy ? "server: { proxy: {} }," : ""}
     plugins: [
       react(),
       ${svg ? "svgr()," : ""}
