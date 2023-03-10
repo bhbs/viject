@@ -20,4 +20,4 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - id: version
-        run: echo VERSION=$(npm pkg get version | tr -d '"')
+        run: echo VERSION=$(npm pkg get version | tr -d '"') >> $GITHUB_OUTPUT
