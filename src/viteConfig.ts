@@ -26,7 +26,6 @@ export default defineConfig(({ mode }) => {
   }\`.replace(/\\/$/, "");
 
   return {
-    ${setupProxy ? "server: { proxy: {} }," : ""}
     plugins: [
       react(),
       ${svg ? "svgr()," : ""}
@@ -175,6 +174,9 @@ const setupProxyPlugin = `\
 function setupProxyPlugin(): Plugin {
   return {
     name: "configure-server",
+    config: () => ({
+			server: { proxy: {} },
+		}),
     configureServer(server) {
       setupProxy(server.middlewares);
     },

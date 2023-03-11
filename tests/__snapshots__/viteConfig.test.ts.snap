@@ -155,7 +155,6 @@ export default defineConfig(({ mode }) => {
         ? homepage
         : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
     return {
-        server: { proxy: {} },
         plugins: [
             react(),
             envPlugin(),
@@ -272,6 +271,9 @@ function importPrefixPlugin() {
 function setupProxyPlugin() {
     return {
         name: \\"configure-server\\",
+        config: () => ({
+            server: { proxy: {} },
+        }),
         configureServer(server) {
             setupProxy(server.middlewares);
         },
@@ -736,7 +738,6 @@ export default defineConfig(({ mode }) => {
   }\`.replace(/\\\\/$/, \\"\\");
 
   return {
-    
     plugins: [
       react(),
       
