@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/posts',
     createProxyMiddleware({
-      target: 'https://jsonplaceholder.typicode.com',
+      target: `${process.env.REACT_APP_PROXY_TARGET}`,
       changeOrigin: true,
     })
   );

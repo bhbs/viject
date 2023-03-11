@@ -17,14 +17,7 @@ ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 const defineConfig = ({ ts, svg, setupProxy }: Options) => `\
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  process.env.NODE_ENV ||= mode;
-  const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"));
-  process.env.PUBLIC_URL ||= \`\${
-    homepage && (homepage.startsWith("http") || homepage.startsWith("/"))
-      ? homepage
-      : \`/\${homepage}\`
-  }\`.replace(/\\/$/, "");
-
+  setEnv(mode);
   return {
     plugins: [
       react(),
@@ -41,6 +34,22 @@ export default defineConfig(({ mode }) => {
     ],
   };
 });
+`;
+
+const setEnv = `\
+function setEnv(mode: string) {
+	Object.assign(
+		process.env,
+		loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]),
+	);
+	process.env.NODE_ENV ||= mode;
+	const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"));
+	process.env.PUBLIC_URL ||= \`\${
+		homepage && (homepage.startsWith("http") || homepage.startsWith("/"))
+			? homepage
+			: \`/\${homepage}\`
+	}\`.replace(/\\/$/, "");
+}
 `;
 
 const envPlugin = `\
@@ -204,6 +213,7 @@ export const createViteConfig = (options: Options) => {
 	const config = `\
 ${importDirective(options)}
 ${defineConfig(options)}
+${setEnv}
 ${envPlugin}
 ${devServerPlugin}
 ${buildPlugin}
