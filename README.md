@@ -15,11 +15,10 @@ npx viject
 
 ## How it works
 
-1. Remove `react-scripts` from `package.json`
 1. Rewrite npm scripts and dependencies for Vite
 1. Remove `react-scripts` from `react-app-env.d.ts`
 1. Rewrite `react-app-env.d.ts` for CRA compatibility
-1. Add `vite.config.ts`
+1. Add `vite.config.ts` includes plugins for compatibility
 1. Add `index.html`
 1. Transform `.js` files including JSX into `.jsx`
 
@@ -53,8 +52,7 @@ npx viject
 
 ### Testing
 
-- 🟢 Running Tests
-- 🚫 Debugging Tests (https://create-react-app.dev/docs/debugging-tests)
+https://vitest.dev/guide/migration.html
 
 ### Back-End Integration
 
