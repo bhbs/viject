@@ -1,8 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`createViteConfig > all: false 1`] = `
-"/// <reference types=\\"vitest\\" />
-import { resolve } from \\"node:path\\";
+"import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
@@ -18,7 +17,6 @@ export default defineConfig(({ mode }) => {
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
-            testPlugin(),
         ],
     };
 });
@@ -95,25 +93,6 @@ function basePlugin() {
         },
     };
 }
-// Vitest configuration compatible with react-scripts
-function testPlugin() {
-    return {
-        name: \\"test-plugin\\",
-        config: () => {
-            return {
-                test: {
-                    globals: true,
-                    environment: \\"happy-dom\\",
-                    setupFiles: [],
-                    include: [
-                        \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
-                        \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
-                    ],
-                },
-            };
-        },
-    };
-}
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
 function importPrefixPlugin() {
@@ -145,8 +124,7 @@ function htmlPlugin(mode) {
 `;
 
 exports[`createViteConfig > setupProxy: true 1`] = `
-"/// <reference types=\\"vitest\\" />
-import { resolve } from \\"node:path\\";
+"import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
@@ -163,7 +141,6 @@ export default defineConfig(({ mode }) => {
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
-            testPlugin(),
             setupProxyPlugin(),
         ],
     };
@@ -241,25 +218,6 @@ function basePlugin() {
         },
     };
 }
-// Vitest configuration compatible with react-scripts
-function testPlugin() {
-    return {
-        name: \\"test-plugin\\",
-        config: () => {
-            return {
-                test: {
-                    globals: true,
-                    environment: \\"happy-dom\\",
-                    setupFiles: [],
-                    include: [
-                        \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
-                        \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
-                    ],
-                },
-            };
-        },
-    };
-}
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
 function importPrefixPlugin() {
@@ -304,8 +262,7 @@ function htmlPlugin(mode) {
 `;
 
 exports[`createViteConfig > setupTestsJs: true 1`] = `
-"/// <reference types=\\"vitest\\" />
-import { resolve } from \\"node:path\\";
+"import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
@@ -321,7 +278,6 @@ export default defineConfig(({ mode }) => {
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
-            testPlugin(),
         ],
     };
 });
@@ -394,25 +350,6 @@ function basePlugin() {
             const { PUBLIC_URL } = loadEnv(mode, \\".\\", [\\"PUBLIC_URL\\"]);
             return {
                 base: PUBLIC_URL || \\"\\",
-            };
-        },
-    };
-}
-// Vitest configuration compatible with react-scripts
-function testPlugin() {
-    return {
-        name: \\"test-plugin\\",
-        config: () => {
-            return {
-                test: {
-                    globals: true,
-                    environment: \\"happy-dom\\",
-                    setupFiles: [\\"src/setupTests\\"],
-                    include: [
-                        \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
-                        \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
-                    ],
-                },
             };
         },
     };
@@ -448,8 +385,7 @@ function htmlPlugin(mode) {
 `;
 
 exports[`createViteConfig > setupTestsTs: true 1`] = `
-"/// <reference types=\\"vitest\\" />
-import { resolve } from \\"node:path\\";
+"import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
@@ -465,7 +401,6 @@ export default defineConfig(({ mode }) => {
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
-            testPlugin(),
         ],
     };
 });
@@ -538,25 +473,6 @@ function basePlugin() {
             const { PUBLIC_URL } = loadEnv(mode, \\".\\", [\\"PUBLIC_URL\\"]);
             return {
                 base: PUBLIC_URL || \\"\\",
-            };
-        },
-    };
-}
-// Vitest configuration compatible with react-scripts
-function testPlugin() {
-    return {
-        name: \\"test-plugin\\",
-        config: () => {
-            return {
-                test: {
-                    globals: true,
-                    environment: \\"happy-dom\\",
-                    setupFiles: [\\"src/setupTests\\"],
-                    include: [
-                        \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
-                        \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
-                    ],
-                },
             };
         },
     };
@@ -592,8 +508,7 @@ function htmlPlugin(mode) {
 `;
 
 exports[`createViteConfig > svg: true 1`] = `
-"/// <reference types=\\"vitest\\" />
-import { resolve } from \\"node:path\\";
+"import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
@@ -611,7 +526,6 @@ export default defineConfig(({ mode }) => {
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
-            testPlugin(),
         ],
     };
 });
@@ -688,25 +602,6 @@ function basePlugin() {
         },
     };
 }
-// Vitest configuration compatible with react-scripts
-function testPlugin() {
-    return {
-        name: \\"test-plugin\\",
-        config: () => {
-            return {
-                test: {
-                    globals: true,
-                    environment: \\"happy-dom\\",
-                    setupFiles: [],
-                    include: [
-                        \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
-                        \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
-                    ],
-                },
-            };
-        },
-    };
-}
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
 function importPrefixPlugin() {
@@ -738,8 +633,7 @@ function htmlPlugin(mode) {
 `;
 
 exports[`createViteConfig > ts: true 1`] = `
-"/// <reference types=\\"vitest\\" />
-import { resolve } from \\"node:path\\";
+"import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
 import { defineConfig, loadEnv, Plugin } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
@@ -761,7 +655,6 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
-      testPlugin(),
       
     ],
   };
@@ -852,26 +745,6 @@ function basePlugin(): Plugin {
       const { PUBLIC_URL } = loadEnv(mode, \\".\\", [\\"PUBLIC_URL\\"]);
       return {
         base: PUBLIC_URL || \\"\\",
-      };
-    },
-  };
-}
-
-// Vitest configuration compatible with react-scripts
-function testPlugin(): Plugin {
-  return {
-    name: \\"test-plugin\\",
-    config: () => {
-      return {
-        test: {
-          globals: true,
-          environment: \\"happy-dom\\",
-          setupFiles: [],
-          include: [
-            \\"src/**/__tests__/**/*.{js,jsx,ts,tsx}\\",
-            \\"src/**/*.{test,spec}.{js,jsx,ts,tsx}\\",
-          ],
-        },
       };
     },
   };
