@@ -27,10 +27,10 @@ export const overWritePackageJson = (options: Options) => {
 	appPackage.scripts = {
 		...appPackage.scripts,
 		dev: "vite",
-		start: appPackage.scripts["start"]
+		start: appPackage.scripts["start"]?.includes("react-scripts start")
 			? appPackage.scripts["start"].replace("react-scripts start", "vite")
 			: "vite",
-		build: appPackage.scripts["build"]
+		build: appPackage.scripts["build"]?.includes("react-scripts build")
 			? appPackage.scripts["build"].replace("react-scripts build", "vite build")
 			: "vite build",
 	};
