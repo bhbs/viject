@@ -1,0 +1,40 @@
+name: Field Test
+on: workflow_dispatch
+jobs:
+  prepare-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: actions/cache@v3
+        with:
+          path: "node_modules"
+          key: ${{ hashFiles('package-lock.json') }}
+      - if: ${{ steps.node_modules_cache.outputs.cache-hit != 'true' }}
+        run: npm ci
+  test:
+    runs-on: ubuntu-latest
+    needs: prepare-cache
+    strategy:
+      matrix:
+        template:
+          - typescript
+          - redux
+          - minimal
+          - solidity
+          - react-declarative
+          - typescript-sass-modules
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: actions/cache@v3
+        with:
+          path: "node_modules"
+          key: ${{ hashFiles('package-lock.json') }}
+      - run: npm run build
+      - run: npx --yes create-react-app projects/${{ matrix.template }} --template ${{ matrix.template }}
+      - run: |
+          cd projects/${{ matrix.template }}
+          node ../../bin/viject.js
+          npm install
+          npm run build
