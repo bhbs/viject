@@ -4,7 +4,6 @@ import { Options } from "./options.js";
 import { appViteConfig } from "./paths.js";
 
 const importDirective = ({ ts, svg, setupProxy }: Options) => `\
-/// <reference types="vitest" />
 import { resolve } from "node:path";
 import { readFileSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin } from "vite";
@@ -29,7 +28,6 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
-      testPlugin(),
       ${setupProxy ? "setupProxyPlugin()," : ""}
     ],
   };
@@ -136,30 +134,6 @@ function basePlugin(): Plugin {
 }
 `;
 
-const testPlugin = ({ setupTestsJs, setupTestsTs }: Options) => `\
-// Vitest configuration compatible with react-scripts
-function testPlugin(): Plugin {
-  return {
-    name: "test-plugin",
-    config: () => {
-      return {
-        test: {
-          globals: true,
-          environment: "happy-dom",
-          setupFiles: [${
-						setupTestsJs || setupTestsTs ? ` "src/setupTests" ` : ""
-					}],
-          include: [
-            "src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-            "src/**/*.{test,spec}.{js,jsx,ts,tsx}",
-          ],
-        },
-      };
-    },
-  };
-}
-`;
-
 const importPrefixPlugin = `\
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
@@ -218,7 +192,6 @@ ${envPlugin}
 ${devServerPlugin}
 ${buildPlugin}
 ${basePlugin}
-${testPlugin(options)}
 ${importPrefixPlugin}
 ${options.setupProxy ? setupProxyPlugin : ""}
 ${htmlPlugin}`;
