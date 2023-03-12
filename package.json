@@ -1,7 +1,7 @@
 {
   "name": "viject",
   "type": "module",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "A tool for migrating your React app from react-scripts (Create React App) to Vite",
   "author": "bhbs <bhbstar.me@gmail.com>",
   "license": "MIT",
