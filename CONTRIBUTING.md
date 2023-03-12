@@ -36,13 +36,3 @@ To check code style:
 ```sh
 npm run lint
 ```
-
-## 🚀 Release (Admin)
-
-```
-npm version $SEMVER
-```
-
-```
-git push origin $TAG
-```
