@@ -72,65 +72,65 @@ function envPlugin(): Plugin {
 
 const devServerPlugin = `\
 function devServerPlugin(): Plugin {
-  return {
-    name: "dev-server-plugin",
-    config: (_, { mode }) => {
-      const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(
-        mode,
-        ".",
-        ["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"],
-      );
-      const https = HTTPS === "true";
-      return {
-        server: {
-          host: HOST || "localhost",
-          port: parseInt(PORT || "3000", 10),
-          open: true,
-          https:
-            https && SSL_CRT_FILE && SSL_KEY_FILE
-              ? {
-                  cert: readFileSync(resolve(SSL_CRT_FILE)),
-                  key: readFileSync(resolve(SSL_KEY_FILE)),
-                }
-              : https,
-        },
-      };
-    },
-  };
+	return {
+		name: "dev-server-plugin",
+		config(_, { mode }) {
+			const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(
+				mode,
+				".",
+				["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"],
+			);
+			const https = HTTPS === "true";
+			return {
+				server: {
+					host: HOST || "localhost",
+					port: parseInt(PORT || "3000", 10),
+					open: true,
+					https:
+						https && SSL_CRT_FILE && SSL_KEY_FILE
+							? {
+									cert: readFileSync(resolve(SSL_CRT_FILE)),
+									key: readFileSync(resolve(SSL_KEY_FILE)),
+							  }
+							: https,
+				},
+			};
+		},
+	};
 }
 `;
 
 const buildPlugin = `\
 function buildPlugin(): Plugin {
-  return {
-    name: "build-plugin",
-    config: (_, { mode }) => {
-      const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, ".", [
-        "BUILD_PATH",
-        "GENERATE_SOURCEMAP",
-      ]);
-      return {
-        build: {
-          sourcemap: GENERATE_SOURCEMAP === "true",
-          outDir: BUILD_PATH || "build",
-        },
-      };
-    },
-  };
+	return {
+		name: "build-plugin",
+		config(_, { mode }) {
+			const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, ".", [
+				"BUILD_PATH",
+				"GENERATE_SOURCEMAP",
+			]);
+			return {
+				build: {
+					sourcemap: GENERATE_SOURCEMAP === "true",
+					outDir: BUILD_PATH || "build",
+				},
+			};
+		},
+	};
 }
 `;
 
 const basePlugin = `\
 function basePlugin(): Plugin {
-  return {
-    name: "base-plugin",
-    config: (_, { mode }) => {
-      const { PUBLIC_URL } = loadEnv(mode, ".", ["PUBLIC_URL"]);
-      return {
-        base: PUBLIC_URL || "",
-      };
-    },
-  };
+	return {
+		name: "base-plugin",
+		config(_, { mode }) {
+			const { PUBLIC_URL } = loadEnv(mode, ".", ["PUBLIC_URL"]);
+			return {
+				base: PUBLIC_URL || "",
+			};
+		},
+	};
 }
 `;
 
@@ -138,16 +138,16 @@ const importPrefixPlugin = `\
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
 function importPrefixPlugin(): Plugin {
-  return {
-    name: "import-prefix-plugin",
-    config: () => {
-      return {
-        resolve: {
-          alias: [{ find: /^~([^/])/, replacement: "$1" }],
-        },
-      };
-    },
-  };
+	return {
+		name: "import-prefix-plugin",
+		config() {
+			return {
+				resolve: {
+					alias: [{ find: /^~([^/])/, replacement: "$1" }],
+				},
+			};
+		},
+	};
 }
 `;
 
@@ -155,31 +155,33 @@ const setupProxyPlugin = `\
 // Configuring the Proxy Manually
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
 function setupProxyPlugin(): Plugin {
-  return {
-    name: "configure-server",
-    config: () => ({
-			server: { proxy: {} },
-		}),
-    configureServer(server) {
-      setupProxy(server.middlewares);
-    },
-  };
+	return {
+		name: "configure-server",
+		config() {
+			return {
+				server: { proxy: {} },
+			};
+		},
+		configureServer(server) {
+			setupProxy(server.middlewares);
+		},
+	};
 }
 `;
 
 const htmlPlugin = `\
 // Replace %ENV_VARIABLES% in index.html
 function htmlPlugin(mode: string): Plugin {
-  const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
-  return {
-    name: "html-transform",
-    transformIndexHtml: {
-      enforce: "pre",
-      transform: (html) => {
-        return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
-      },
-    },
-  };
+	const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
+	return {
+		name: "html-transform",
+		transformIndexHtml: {
+			enforce: "pre",
+			transform(html) {
+				return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
+			},
+		},
+	};
 }
 `;
 
