@@ -4,7 +4,7 @@ export const checkGitStatus = () => {
 	let gitStatus;
 
 	try {
-		let stdout = execSync("git status --porcelain", {
+		const stdout = execSync("git status --porcelain", {
 			stdio: ["pipe", "pipe", "ignore"],
 		}).toString();
 		gitStatus = stdout.trim();
