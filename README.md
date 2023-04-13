@@ -15,12 +15,12 @@ npx viject
 
 ## How it works
 
-1. Rewrite npm scripts and dependencies for Vite
-1. Remove `react-scripts` from `react-app-env.d.ts`
-1. Rewrite `react-app-env.d.ts` for CRA compatibility
-1. Add `vite.config.ts` includes plugins for compatibility
-1. Add `index.html`
-1. Transform `.js` files including JSX into `.jsx`
+1. Rewrite npm scripts
+2. Add dependencies
+3. Rewrite `react-app-env.d.ts`
+4. Move `index.html`
+5. Transform `.js` files including JSX into `.jsx`
+6. Add `vite.config.(js|ts)` includes plugins for CRA compatibility
 
 ## Supported features
 
