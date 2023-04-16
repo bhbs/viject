@@ -24,7 +24,8 @@ export default defineConfig(({ mode }) => {
       ${ts ? "tsconfigPaths()," : ""}
       envPlugin(),
       devServerPlugin(),
-      buildPlugin(),
+      sourcemapPlugin(),
+      buildPathPlugin(),
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
@@ -100,18 +101,34 @@ function devServerPlugin(): Plugin {
 }
 `;
 
-const buildPlugin = `\
-function buildPlugin(): Plugin {
+const sourcemapPlugin = `\
+function sourcemapPlugin(): Plugin {
 	return {
-		name: "build-plugin",
+		name: "sourcemap-plugin",
 		config(_, { mode }) {
-			const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, ".", [
-				"BUILD_PATH",
+			const { GENERATE_SOURCEMAP } = loadEnv(mode, ".", [
 				"GENERATE_SOURCEMAP",
 			]);
 			return {
 				build: {
 					sourcemap: GENERATE_SOURCEMAP === "true",
+				},
+			};
+		},
+	};
+}
+`;
+
+const buildPathPlugin = `\
+function buildPathPlugin(): Plugin {
+	return {
+		name: "build-path-plugin",
+		config(_, { mode }) {
+			const { BUILD_PATH } = loadEnv(mode, ".", [
+				"BUILD_PATH",
+			]);
+			return {
+				build: {
 					outDir: BUILD_PATH || "build",
 				},
 			};
@@ -192,7 +209,8 @@ ${defineConfig(options)}
 ${setEnv}
 ${envPlugin}
 ${devServerPlugin}
-${buildPlugin}
+${sourcemapPlugin}
+${buildPathPlugin}
 ${basePlugin}
 ${importPrefixPlugin}
 ${options.setupProxy ? setupProxyPlugin : ""}

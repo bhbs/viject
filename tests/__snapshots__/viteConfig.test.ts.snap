@@ -13,7 +13,8 @@ export default defineConfig(({ mode }) => {
             react(),
             envPlugin(),
             devServerPlugin(),
-            buildPlugin(),
+            sourcemapPlugin(),
+            buildPathPlugin(),
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
@@ -65,17 +66,30 @@ function devServerPlugin() {
         },
     };
 }
-function buildPlugin() {
+function sourcemapPlugin() {
     return {
-        name: \\"build-plugin\\",
+        name: \\"sourcemap-plugin\\",
         config(_, { mode }) {
-            const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
-                \\"BUILD_PATH\\",
+            const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
                 \\"GENERATE_SOURCEMAP\\",
             ]);
             return {
                 build: {
                     sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                },
+            };
+        },
+    };
+}
+function buildPathPlugin() {
+    return {
+        name: \\"build-path-plugin\\",
+        config(_, { mode }) {
+            const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+            ]);
+            return {
+                build: {
                     outDir: BUILD_PATH || \\"build\\",
                 },
             };
@@ -137,7 +151,8 @@ export default defineConfig(({ mode }) => {
             react(),
             envPlugin(),
             devServerPlugin(),
-            buildPlugin(),
+            sourcemapPlugin(),
+            buildPathPlugin(),
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
@@ -190,17 +205,30 @@ function devServerPlugin() {
         },
     };
 }
-function buildPlugin() {
+function sourcemapPlugin() {
     return {
-        name: \\"build-plugin\\",
+        name: \\"sourcemap-plugin\\",
         config(_, { mode }) {
-            const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
-                \\"BUILD_PATH\\",
+            const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
                 \\"GENERATE_SOURCEMAP\\",
             ]);
             return {
                 build: {
                     sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                },
+            };
+        },
+    };
+}
+function buildPathPlugin() {
+    return {
+        name: \\"build-path-plugin\\",
+        config(_, { mode }) {
+            const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+            ]);
+            return {
+                build: {
                     outDir: BUILD_PATH || \\"build\\",
                 },
             };
@@ -276,7 +304,8 @@ export default defineConfig(({ mode }) => {
             react(),
             envPlugin(),
             devServerPlugin(),
-            buildPlugin(),
+            sourcemapPlugin(),
+            buildPathPlugin(),
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
@@ -328,17 +357,30 @@ function devServerPlugin() {
         },
     };
 }
-function buildPlugin() {
+function sourcemapPlugin() {
     return {
-        name: \\"build-plugin\\",
+        name: \\"sourcemap-plugin\\",
         config(_, { mode }) {
-            const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
-                \\"BUILD_PATH\\",
+            const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
                 \\"GENERATE_SOURCEMAP\\",
             ]);
             return {
                 build: {
                     sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                },
+            };
+        },
+    };
+}
+function buildPathPlugin() {
+    return {
+        name: \\"build-path-plugin\\",
+        config(_, { mode }) {
+            const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+            ]);
+            return {
+                build: {
                     outDir: BUILD_PATH || \\"build\\",
                 },
             };
@@ -399,7 +441,8 @@ export default defineConfig(({ mode }) => {
             react(),
             envPlugin(),
             devServerPlugin(),
-            buildPlugin(),
+            sourcemapPlugin(),
+            buildPathPlugin(),
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
@@ -451,17 +494,30 @@ function devServerPlugin() {
         },
     };
 }
-function buildPlugin() {
+function sourcemapPlugin() {
     return {
-        name: \\"build-plugin\\",
+        name: \\"sourcemap-plugin\\",
         config(_, { mode }) {
-            const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
-                \\"BUILD_PATH\\",
+            const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
                 \\"GENERATE_SOURCEMAP\\",
             ]);
             return {
                 build: {
                     sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                },
+            };
+        },
+    };
+}
+function buildPathPlugin() {
+    return {
+        name: \\"build-path-plugin\\",
+        config(_, { mode }) {
+            const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+            ]);
+            return {
+                build: {
                     outDir: BUILD_PATH || \\"build\\",
                 },
             };
@@ -524,7 +580,8 @@ export default defineConfig(({ mode }) => {
             svgr(),
             envPlugin(),
             devServerPlugin(),
-            buildPlugin(),
+            sourcemapPlugin(),
+            buildPathPlugin(),
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
@@ -576,17 +633,30 @@ function devServerPlugin() {
         },
     };
 }
-function buildPlugin() {
+function sourcemapPlugin() {
     return {
-        name: \\"build-plugin\\",
+        name: \\"sourcemap-plugin\\",
         config(_, { mode }) {
-            const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
-                \\"BUILD_PATH\\",
+            const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
                 \\"GENERATE_SOURCEMAP\\",
             ]);
             return {
                 build: {
                     sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                },
+            };
+        },
+    };
+}
+function buildPathPlugin() {
+    return {
+        name: \\"build-path-plugin\\",
+        config(_, { mode }) {
+            const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+            ]);
+            return {
+                build: {
                     outDir: BUILD_PATH || \\"build\\",
                 },
             };
@@ -653,7 +723,8 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
       envPlugin(),
       devServerPlugin(),
-      buildPlugin(),
+      sourcemapPlugin(),
+      buildPathPlugin(),
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
@@ -722,17 +793,31 @@ function devServerPlugin(): Plugin {
 	};
 }
 
-function buildPlugin(): Plugin {
+function sourcemapPlugin(): Plugin {
 	return {
-		name: \\"build-plugin\\",
+		name: \\"sourcemap-plugin\\",
 		config(_, { mode }) {
-			const { BUILD_PATH, GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
-				\\"BUILD_PATH\\",
+			const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
 				\\"GENERATE_SOURCEMAP\\",
 			]);
 			return {
 				build: {
 					sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+				},
+			};
+		},
+	};
+}
+
+function buildPathPlugin(): Plugin {
+	return {
+		name: \\"build-path-plugin\\",
+		config(_, { mode }) {
+			const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+				\\"BUILD_PATH\\",
+			]);
+			return {
+				build: {
 					outDir: BUILD_PATH || \\"build\\",
 				},
 			};
