@@ -53,6 +53,7 @@ function setEnv(mode: string) {
 
 const envPlugin = `\
 // Expose \`process.env\` environment variables to your client code
+// https://vitejs.dev/config/shared-options.html#define
 function envPlugin(): Plugin {
   return {
     name: "env-plugin",
@@ -72,6 +73,7 @@ function envPlugin(): Plugin {
 `;
 
 const devServerPlugin = `\
+// https://vitejs.dev/config/server-options.html#server-https
 function devServerPlugin(): Plugin {
 	return {
 		name: "dev-server-plugin",
@@ -102,6 +104,7 @@ function devServerPlugin(): Plugin {
 `;
 
 const sourcemapPlugin = `\
+// https://vitejs.dev/config/build-options.html#build-sourcemap
 function sourcemapPlugin(): Plugin {
 	return {
 		name: "sourcemap-plugin",
@@ -120,6 +123,7 @@ function sourcemapPlugin(): Plugin {
 `;
 
 const buildPathPlugin = `\
+// https://vitejs.dev/config/build-options.html#build-outdir
 function buildPathPlugin(): Plugin {
 	return {
 		name: "build-path-plugin",
@@ -138,6 +142,7 @@ function buildPathPlugin(): Plugin {
 `;
 
 const basePlugin = `\
+// https://vitejs.dev/config/shared-options.html#base
 function basePlugin(): Plugin {
 	return {
 		name: "base-plugin",
@@ -154,6 +159,7 @@ function basePlugin(): Plugin {
 const importPrefixPlugin = `\
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
+// https://vitejs.dev/config/shared-options.html#resolve-alias
 function importPrefixPlugin(): Plugin {
 	return {
 		name: "import-prefix-plugin",
@@ -171,6 +177,7 @@ function importPrefixPlugin(): Plugin {
 const setupProxyPlugin = `\
 // Configuring the Proxy Manually
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
+// https://vitejs.dev/guide/api-plugin.html#configureserver
 function setupProxyPlugin(): Plugin {
 	return {
 		name: "configure-server",
@@ -188,6 +195,7 @@ function setupProxyPlugin(): Plugin {
 
 const htmlPlugin = `\
 // Replace %ENV_VARIABLES% in index.html
+// https://vitejs.dev/guide/api-plugin.html#transformindexhtml
 function htmlPlugin(mode: string): Plugin {
 	const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
 	return {
