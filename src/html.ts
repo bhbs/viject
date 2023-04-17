@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { appIndexHTML, oldIndexHTML } from "./paths.js";
 
 export const moveIndexHTML = () => {
@@ -8,6 +8,7 @@ export const moveIndexHTML = () => {
 			'<script type="module" src="src/index"></script></head>',
 		);
 		writeFileSync(appIndexHTML, html);
+		unlinkSync(oldIndexHTML);
 	} catch (e) {
 		console.error(e);
 	}
