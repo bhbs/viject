@@ -1,6 +1,11 @@
 import { existsSync } from "node:fs";
 import { intro, outro, spinner, cancel, note } from "@clack/prompts";
-import { appViteConfig, appIndexHTML, oldIndexHTML } from "./paths.js";
+import {
+	appViteConfigTs,
+	appViteConfigJs,
+	appIndexHTML,
+	oldIndexHTML,
+} from "./paths.js";
 import { convertJS2JSX } from "./convert.js";
 import { checkGitStatus } from "./git.js";
 import { overWritePackageJson } from "./packageJson.js";
@@ -39,7 +44,7 @@ overWriteDTSStep.start("Rewriting d.ts files");
 overWriteDTS();
 overWriteDTSStep.stop("Rewriting d.ts files: Done");
 
-if (!existsSync(appViteConfig)) {
+if (!existsSync(appViteConfigTs) && !existsSync(appViteConfigJs)) {
 	const writeViteConfigStep = spinner();
 	writeViteConfigStep.start("Writing vite.config.js");
 	writeViteConfig(options);
