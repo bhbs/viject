@@ -25,9 +25,11 @@ function setEnv(mode) {
     Object.assign(process.env, loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]));
     process.env.NODE_ENV ||= mode;
     const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
-    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
-        ? homepage
-        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
+    process.env.PUBLIC_URL ||= homepage
+        ? \`\${homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+            ? homepage
+            : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\")
+        : \\"\\";
 }
 // Expose \`process.env\` environment variables to your client code
 // https://vitejs.dev/config/shared-options.html#define
@@ -171,9 +173,11 @@ function setEnv(mode) {
     Object.assign(process.env, loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]));
     process.env.NODE_ENV ||= mode;
     const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
-    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
-        ? homepage
-        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
+    process.env.PUBLIC_URL ||= homepage
+        ? \`\${homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+            ? homepage
+            : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\")
+        : \\"\\";
 }
 // Expose \`process.env\` environment variables to your client code
 // https://vitejs.dev/config/shared-options.html#define
@@ -331,9 +335,11 @@ function setEnv(mode) {
     Object.assign(process.env, loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]));
     process.env.NODE_ENV ||= mode;
     const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
-    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
-        ? homepage
-        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
+    process.env.PUBLIC_URL ||= homepage
+        ? \`\${homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+            ? homepage
+            : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\")
+        : \\"\\";
 }
 // Expose \`process.env\` environment variables to your client code
 // https://vitejs.dev/config/shared-options.html#define
@@ -475,9 +481,11 @@ function setEnv(mode) {
     Object.assign(process.env, loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]));
     process.env.NODE_ENV ||= mode;
     const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
-    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
-        ? homepage
-        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
+    process.env.PUBLIC_URL ||= homepage
+        ? \`\${homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+            ? homepage
+            : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\")
+        : \\"\\";
 }
 // Expose \`process.env\` environment variables to your client code
 // https://vitejs.dev/config/shared-options.html#define
@@ -621,9 +629,11 @@ function setEnv(mode) {
     Object.assign(process.env, loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]));
     process.env.NODE_ENV ||= mode;
     const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
-    process.env.PUBLIC_URL ||= \`\${homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
-        ? homepage
-        : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\");
+    process.env.PUBLIC_URL ||= homepage
+        ? \`\${homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+            ? homepage
+            : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\")
+        : \\"\\";
 }
 // Expose \`process.env\` environment variables to your client code
 // https://vitejs.dev/config/shared-options.html#define
@@ -776,11 +786,13 @@ function setEnv(mode: string) {
 	);
 	process.env.NODE_ENV ||= mode;
 	const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
-	process.env.PUBLIC_URL ||= \`\${
-		homepage && (homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\"))
-			? homepage
-			: \`/\${homepage}\`
-	}\`.replace(/\\\\/$/, \\"\\");
+	process.env.PUBLIC_URL ||= homepage
+		? \`\${
+				homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+					? homepage
+					: \`/\${homepage}\`
+			}\`.replace(/\\\\/$/, \\"\\")
+		: \\"\\";
 }
 
 // Expose \`process.env\` environment variables to your client code
