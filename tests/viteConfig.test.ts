@@ -3,7 +3,8 @@ import { Options } from "../src/options";
 import { createViteConfig } from "../src/viteConfig";
 
 const defaultOptions: Options = {
-	ts: false,
+	tsConfig: false,
+	jsConfig: false,
 	svg: false,
 	setupProxy: false,
 	setupTestsJs: false,
@@ -15,8 +16,12 @@ describe("createViteConfig", () => {
 		const options = { ...defaultOptions };
 		expect(createViteConfig(options)).toMatchSnapshot();
 	});
-	it("ts: true", () => {
-		const options = { ...defaultOptions, ts: true };
+	it("tsConfig: true", () => {
+		const options = { ...defaultOptions, tsConfig: true };
+		expect(createViteConfig(options)).toMatchSnapshot();
+	});
+	it("jsConfig: true", () => {
+		const options = { ...defaultOptions, jsConfig: true };
 		expect(createViteConfig(options)).toMatchSnapshot();
 	});
 	it("svg: true", () => {
