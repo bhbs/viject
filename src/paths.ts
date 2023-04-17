@@ -16,8 +16,10 @@ const resolveOwn = (relativePath: string) =>
 export const appSrcDir = resolveApp("src");
 export const appIndexHTML = resolveApp("index.html");
 export const oldIndexHTML = resolveApp("public/index.html");
-export const appViteConfig = resolveApp("vite.config.ts");
+export const appViteConfigTs = resolveApp("vite.config.ts");
+export const appViteConfigJs = resolveApp("vite.config.js");
 export const appTsConfig = resolveApp("tsconfig.json");
+export const appJsConfig = resolveApp("jsconfig.json");
 export const appPackageJson = resolveApp("package.json");
 export const ownPackageJson = resolveOwn("package.json");
 export const appSetupProxy = resolveApp("src/setupProxy.js");

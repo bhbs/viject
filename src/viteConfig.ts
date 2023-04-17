@@ -1,19 +1,21 @@
 import { writeFileSync } from "node:fs";
 import typescript from "typescript";
 import { Options } from "./options.js";
-import { appViteConfig } from "./paths.js";
+import { appViteConfigJs, appViteConfigTs } from "./paths.js";
 
-const importDirective = ({ ts, svg, setupProxy }: Options) => `\
+const importDirective = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
 import { resolve } from "node:path";
 import { readFileSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-${ts ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""}
+${
+	tsConfig || jsConfig ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""
+}
 ${svg ? 'import svgr from "vite-plugin-svgr";' : ""}
 ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
-const defineConfig = ({ ts, svg, setupProxy }: Options) => `\
+const defineConfig = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   setEnv(mode);
@@ -21,7 +23,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       ${svg ? "svgr()," : ""}
-      ${ts ? "tsconfigPaths()," : ""}
+      ${tsConfig || jsConfig ? "tsconfigPaths()," : ""}
       envPlugin(),
       devServerPlugin(),
       sourcemapPlugin(),
@@ -226,7 +228,7 @@ ${importPrefixPlugin}
 ${options.setupProxy ? setupProxyPlugin : ""}
 ${htmlPlugin}`;
 
-	return options.ts
+	return options.tsConfig
 		? config
 		: typescript.transpileModule(config, {
 				compilerOptions: {
@@ -238,5 +240,7 @@ ${htmlPlugin}`;
 
 export const writeViteConfig = (options: Options) => {
 	const viteConfig = createViteConfig(options);
-	writeFileSync(appViteConfig, viteConfig);
+	options.tsConfig
+		? writeFileSync(appViteConfigTs, viteConfig)
+		: writeFileSync(appViteConfigJs, viteConfig);
 };

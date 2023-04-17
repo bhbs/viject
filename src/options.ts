@@ -1,6 +1,7 @@
 import { existsSync, lstatSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import {
+	appJsConfig,
 	appSetupProxy,
 	appSetupTestsJs,
 	appSetupTestsTs,
@@ -9,7 +10,8 @@ import {
 } from "./paths.js";
 
 export type Options = {
-	ts: boolean;
+	jsConfig: boolean;
+	tsConfig: boolean;
 	svg: boolean;
 	setupProxy: boolean;
 	setupTestsJs: boolean;
@@ -17,13 +19,15 @@ export type Options = {
 };
 
 export const getOptions = () => {
-	const ts = existsSync(appTsConfig);
+	const jsConfig = existsSync(appJsConfig);
+	const tsConfig = existsSync(appTsConfig);
 	const svg = searchSvg(appSrcDir);
 	const setupProxy = existsSync(appSetupProxy);
 	const setupTestsJs = existsSync(appSetupTestsJs);
 	const setupTestsTs = existsSync(appSetupTestsTs);
 	return {
-		ts,
+		jsConfig,
+		tsConfig,
 		svg,
 		setupProxy,
 		setupTestsJs,
