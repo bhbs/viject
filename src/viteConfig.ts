@@ -43,11 +43,13 @@ function setEnv(mode: string) {
 	);
 	process.env.NODE_ENV ||= mode;
 	const { homepage } = JSON.parse(readFileSync("package.json", "utf-8"));
-	process.env.PUBLIC_URL ||= \`\${
-		homepage && (homepage.startsWith("http") || homepage.startsWith("/"))
-			? homepage
-			: \`/\${homepage}\`
-	}\`.replace(/\\/$/, "");
+	process.env.PUBLIC_URL ||= homepage
+		? \`\${
+				homepage.startsWith("http") || homepage.startsWith("/")
+					? homepage
+					: \`/\${homepage}\`
+			}\`.replace(/\\/$/, "")
+		: "";
 }
 `;
 
