@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as i,V as t}from"./chunks/framework.9c8c4f78.js";const _=JSON.parse('{"title":"Viject ⚡","description":"","frontmatter":{},"headers":[],"relativePath":"index.md"}'),l={name:"index.md"},r=t("",24),n=[r];function s(o,d,c,p,h,u){return i(),a("div",null,n)}const f=e(l,[["render",s]]);export{_ as __pageData,f as default};
