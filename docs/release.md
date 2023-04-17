@@ -266,7 +266,7 @@ https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
 
 https://www.npmjs.com/package/vite-tsconfig-paths
 
-`vite-tsconfig-paths` gives Vite the ability to resolve imports using TypeScript's path mapping.
+`vite-tsconfig-paths` gives Vite the ability to resolve imports using path mapping (jsconfig.json / tsconfig.json).
 
 ### 2. Move index.html
 
