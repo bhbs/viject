@@ -64,7 +64,8 @@ function setEnv(mode: string) {
 
 const envPlugin = `\
 // Expose \`process.env\` environment variables to your client code
-// https://vitejs.dev/config/shared-options.html#define
+// Migration guide: Follow the guide below to replace process.env with import.meta.env in your app, you may also need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
+// https://vitejs.dev/guide/env-and-mode.html#env-variables
 function envPlugin(): Plugin {
   return {
     name: "env-plugin",
@@ -84,7 +85,11 @@ function envPlugin(): Plugin {
 `;
 
 const devServerPlugin = `\
+// Setup HOST, SSL, PORT
+// Migration guide: Follow the guides below
+// https://vitejs.dev/config/server-options.html#server-host
 // https://vitejs.dev/config/server-options.html#server-https
+// https://vitejs.dev/config/server-options.html#server-port
 function devServerPlugin(): Plugin {
 	return {
 		name: "dev-server-plugin",
@@ -115,6 +120,7 @@ function devServerPlugin(): Plugin {
 `;
 
 const sourcemapPlugin = `\
+// Migration guide: Follow the guide below
 // https://vitejs.dev/config/build-options.html#build-sourcemap
 function sourcemapPlugin(): Plugin {
 	return {
@@ -134,6 +140,7 @@ function sourcemapPlugin(): Plugin {
 `;
 
 const buildPathPlugin = `\
+// Migration guide: Follow the guide below
 // https://vitejs.dev/config/build-options.html#build-outdir
 function buildPathPlugin(): Plugin {
 	return {
@@ -153,6 +160,7 @@ function buildPathPlugin(): Plugin {
 `;
 
 const basePlugin = `\
+// Migration guide: Follow the guide below and remove homepage field in package.json
 // https://vitejs.dev/config/shared-options.html#base
 function basePlugin(): Plugin {
 	return {
@@ -170,6 +178,7 @@ function basePlugin(): Plugin {
 const importPrefixPlugin = `\
 // To resolve modules from node_modules, you can prefix paths with ~
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
+// Migration guide: Follow the guide below
 // https://vitejs.dev/config/shared-options.html#resolve-alias
 function importPrefixPlugin(): Plugin {
 	return {
@@ -188,6 +197,7 @@ function importPrefixPlugin(): Plugin {
 const proxyPlugin = `\
 // Configuring the Proxy in package.json
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/
+// Migration guide: Follow the guide below and remove proxy field in package.json
 // https://vitejs.dev/config/server-options.html#server-proxy
 function proxyPlugin(): Plugin {
 	return {
@@ -243,6 +253,8 @@ const setupProxyPlugin = `\
 // Configuring the Proxy Manually
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
 // https://vitejs.dev/guide/api-plugin.html#configureserver
+// Migration guide: Follow the guide below and remove src/setupProxy
+// https://vitejs.dev/config/server-options.html#server-proxy
 function setupProxyPlugin(): Plugin {
 	return {
 		name: "setup-proxy-plugin",
@@ -261,6 +273,8 @@ function setupProxyPlugin(): Plugin {
 const htmlPlugin = `\
 // Replace %ENV_VARIABLES% in index.html
 // https://vitejs.dev/guide/api-plugin.html#transformindexhtml
+// Migration guide: Follow the guide below, you may need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
+// https://vitejs.dev/guide/env-and-mode.html#html-env-replacement
 function htmlPlugin(mode: string): Plugin {
 	const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
 	return {
