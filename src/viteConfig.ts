@@ -245,7 +245,7 @@ const setupProxyPlugin = `\
 // https://vitejs.dev/guide/api-plugin.html#configureserver
 function setupProxyPlugin(): Plugin {
 	return {
-		name: "configure-server",
+		name: "setup-proxy-plugin",
 		config() {
 			return {
 				server: { proxy: {} },
@@ -264,7 +264,7 @@ const htmlPlugin = `\
 function htmlPlugin(mode: string): Plugin {
 	const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
 	return {
-		name: "html-transform",
+		name: "html-plugin",
 		transformIndexHtml: {
 			enforce: "pre",
 			transform(html) {

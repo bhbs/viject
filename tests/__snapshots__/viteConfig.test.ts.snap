@@ -134,7 +134,7 @@ function importPrefixPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -282,7 +282,7 @@ function importPrefixPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -476,7 +476,7 @@ function proxyPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -624,7 +624,7 @@ function importPrefixPlugin() {
 // https://vitejs.dev/guide/api-plugin.html#configureserver
 function setupProxyPlugin() {
     return {
-        name: \\"configure-server\\",
+        name: \\"setup-proxy-plugin\\",
         config() {
             return {
                 server: { proxy: {} },
@@ -640,7 +640,7 @@ function setupProxyPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -786,7 +786,7 @@ function importPrefixPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -932,7 +932,7 @@ function importPrefixPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -1080,7 +1080,7 @@ function importPrefixPlugin() {
 function htmlPlugin(mode) {
     const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
     return {
-        name: \\"html-transform\\",
+        name: \\"html-plugin\\",
         transformIndexHtml: {
             enforce: \\"pre\\",
             transform(html) {
@@ -1256,7 +1256,7 @@ function importPrefixPlugin(): Plugin {
 function htmlPlugin(mode: string): Plugin {
 	const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
 	return {
-		name: \\"html-transform\\",
+		name: \\"html-plugin\\",
 		transformIndexHtml: {
 			enforce: \\"pre\\",
 			transform(html) {
