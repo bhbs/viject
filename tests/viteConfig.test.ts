@@ -6,6 +6,7 @@ const defaultOptions: Options = {
 	tsConfig: false,
 	jsConfig: false,
 	svg: false,
+	proxy: false,
 	setupProxy: false,
 	setupTestsJs: false,
 	setupTestsTs: false,
@@ -26,6 +27,10 @@ describe("createViteConfig", () => {
 	});
 	it("svg: true", () => {
 		const options = { ...defaultOptions, svg: true };
+		expect(createViteConfig(options)).toMatchSnapshot();
+	});
+	it("proxy: true", () => {
+		const options = { ...defaultOptions, proxy: true };
 		expect(createViteConfig(options)).toMatchSnapshot();
 	});
 	it("setupProxy: true", () => {

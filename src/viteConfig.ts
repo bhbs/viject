@@ -5,7 +5,7 @@ import { appViteConfigJs, appViteConfigTs } from "./paths.js";
 
 const importDirective = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
 import { resolve } from "node:path";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 ${
@@ -15,7 +15,13 @@ ${svg ? 'import svgr from "vite-plugin-svgr";' : ""}
 ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
-const defineConfig = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
+const defineConfig = ({
+	tsConfig,
+	jsConfig,
+	svg,
+	proxy,
+	setupProxy,
+}: Options) => `\
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   setEnv(mode);
@@ -31,6 +37,7 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
+      ${proxy ? "proxyPlugin()," : ""}
       ${setupProxy ? "setupProxyPlugin()," : ""}
     ],
   };
@@ -178,6 +185,60 @@ function importPrefixPlugin(): Plugin {
 }
 `;
 
+const proxyPlugin = `\
+// Configuring the Proxy in package.json
+// https://create-react-app.dev/docs/proxying-api-requests-in-development/
+// https://vitejs.dev/config/server-options.html#server-proxy
+function proxyPlugin(): Plugin {
+	return {
+		name: "proxy-plugin",
+		config() {
+			const { proxy } = JSON.parse(readFileSync("package.json", "utf-8"));
+			const publicUrl = process.env.PUBLIC_URL || "";
+			const basePath = publicUrl.startsWith("http")
+				? new URL(publicUrl).pathname
+				: publicUrl;
+			return {
+				server: {
+					proxy: {
+						"^.*": {
+							target: proxy,
+							changeOrigin: true,
+							secure: false,
+							ws: true,
+							bypass(req) {
+								const path = req.url || "";
+								const pathWithoutBase = path.replace(
+									new RegExp(\`^(\${basePath})?/\`),
+									"",
+								);
+								if (req.method !== "GET") return;
+								if (
+									!req.headers.accept?.includes("text/html") &&
+									!existsSync(resolve("public", pathWithoutBase)) &&
+									![
+										"src",
+										"@id",
+										"@fs",
+										"@vite",
+										"@react-refresh",
+										"node_modules",
+										"__open-in-editor",
+									].includes(pathWithoutBase.split("/")[0])
+								) {
+									return;
+								}
+								return req.url;
+							},
+						},
+					},
+				},
+			};
+		},
+	};
+}
+`;
+
 const setupProxyPlugin = `\
 // Configuring the Proxy Manually
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
@@ -225,6 +286,7 @@ ${sourcemapPlugin}
 ${buildPathPlugin}
 ${basePlugin}
 ${importPrefixPlugin}
+${options.proxy ? proxyPlugin : ""}
 ${options.setupProxy ? setupProxyPlugin : ""}
 ${htmlPlugin}`;
 

@@ -1,4 +1,4 @@
-import { existsSync, lstatSync, readdirSync } from "node:fs";
+import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import {
 	appJsConfig,
@@ -7,12 +7,14 @@ import {
 	appSetupTestsTs,
 	appSrcDir,
 	appTsConfig,
+	appPackageJson,
 } from "./paths.js";
 
 export type Options = {
 	jsConfig: boolean;
 	tsConfig: boolean;
 	svg: boolean;
+	proxy: boolean;
 	setupProxy: boolean;
 	setupTestsJs: boolean;
 	setupTestsTs: boolean;
@@ -22,6 +24,7 @@ export const getOptions = () => {
 	const jsConfig = existsSync(appJsConfig);
 	const tsConfig = existsSync(appTsConfig);
 	const svg = searchSvg(appSrcDir);
+	const proxy = JSON.parse(readFileSync(appPackageJson, "utf-8")).proxy;
 	const setupProxy = existsSync(appSetupProxy);
 	const setupTestsJs = existsSync(appSetupTestsJs);
 	const setupTestsTs = existsSync(appSetupTestsTs);
@@ -29,6 +32,7 @@ export const getOptions = () => {
 		jsConfig,
 		tsConfig,
 		svg,
+		proxy,
 		setupProxy,
 		setupTestsJs,
 		setupTestsTs,

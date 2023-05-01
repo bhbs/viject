@@ -294,6 +294,200 @@ function htmlPlugin(mode) {
 "
 `;
 
+exports[`createViteConfig > proxy: true 1`] = `
+"import { resolve } from \\"node:path\\";
+import { readFileSync, existsSync } from \\"node:fs\\";
+import { defineConfig, loadEnv } from \\"vite\\";
+import react from \\"@vitejs/plugin-react\\";
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => {
+    setEnv(mode);
+    return {
+        plugins: [
+            react(),
+            envPlugin(),
+            devServerPlugin(),
+            sourcemapPlugin(),
+            buildPathPlugin(),
+            basePlugin(),
+            importPrefixPlugin(),
+            htmlPlugin(mode),
+            proxyPlugin(),
+        ],
+    };
+});
+function setEnv(mode) {
+    Object.assign(process.env, loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]));
+    process.env.NODE_ENV ||= mode;
+    const { homepage } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+    process.env.PUBLIC_URL ||= homepage
+        ? \`\${homepage.startsWith(\\"http\\") || homepage.startsWith(\\"/\\")
+            ? homepage
+            : \`/\${homepage}\`}\`.replace(/\\\\/$/, \\"\\")
+        : \\"\\";
+}
+// Expose \`process.env\` environment variables to your client code
+// https://vitejs.dev/config/shared-options.html#define
+function envPlugin() {
+    return {
+        name: \\"env-plugin\\",
+        config(_, { mode }) {
+            const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
+            return {
+                define: Object.fromEntries(Object.entries(env).map(([key, value]) => [
+                    \`process.env.\${key}\`,
+                    JSON.stringify(value),
+                ])),
+            };
+        },
+    };
+}
+// https://vitejs.dev/config/server-options.html#server-https
+function devServerPlugin() {
+    return {
+        name: \\"dev-server-plugin\\",
+        config(_, { mode }) {
+            const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(mode, \\".\\", [\\"HOST\\", \\"PORT\\", \\"HTTPS\\", \\"SSL_CRT_FILE\\", \\"SSL_KEY_FILE\\"]);
+            const https = HTTPS === \\"true\\";
+            return {
+                server: {
+                    host: HOST || \\"localhost\\",
+                    port: parseInt(PORT || \\"3000\\", 10),
+                    open: true,
+                    https: https && SSL_CRT_FILE && SSL_KEY_FILE
+                        ? {
+                            cert: readFileSync(resolve(SSL_CRT_FILE)),
+                            key: readFileSync(resolve(SSL_KEY_FILE)),
+                        }
+                        : https,
+                },
+            };
+        },
+    };
+}
+// https://vitejs.dev/config/build-options.html#build-sourcemap
+function sourcemapPlugin() {
+    return {
+        name: \\"sourcemap-plugin\\",
+        config(_, { mode }) {
+            const { GENERATE_SOURCEMAP } = loadEnv(mode, \\".\\", [
+                \\"GENERATE_SOURCEMAP\\",
+            ]);
+            return {
+                build: {
+                    sourcemap: GENERATE_SOURCEMAP === \\"true\\",
+                },
+            };
+        },
+    };
+}
+// https://vitejs.dev/config/build-options.html#build-outdir
+function buildPathPlugin() {
+    return {
+        name: \\"build-path-plugin\\",
+        config(_, { mode }) {
+            const { BUILD_PATH } = loadEnv(mode, \\".\\", [
+                \\"BUILD_PATH\\",
+            ]);
+            return {
+                build: {
+                    outDir: BUILD_PATH || \\"build\\",
+                },
+            };
+        },
+    };
+}
+// https://vitejs.dev/config/shared-options.html#base
+function basePlugin() {
+    return {
+        name: \\"base-plugin\\",
+        config(_, { mode }) {
+            const { PUBLIC_URL } = loadEnv(mode, \\".\\", [\\"PUBLIC_URL\\"]);
+            return {
+                base: PUBLIC_URL || \\"\\",
+            };
+        },
+    };
+}
+// To resolve modules from node_modules, you can prefix paths with ~
+// https://create-react-app.dev/docs/adding-a-sass-stylesheet
+// https://vitejs.dev/config/shared-options.html#resolve-alias
+function importPrefixPlugin() {
+    return {
+        name: \\"import-prefix-plugin\\",
+        config() {
+            return {
+                resolve: {
+                    alias: [{ find: /^~([^/])/, replacement: \\"$1\\" }],
+                },
+            };
+        },
+    };
+}
+// Configuring the Proxy in package.json
+// https://create-react-app.dev/docs/proxying-api-requests-in-development/
+// https://vitejs.dev/config/server-options.html#server-proxy
+function proxyPlugin() {
+    return {
+        name: \\"proxy-plugin\\",
+        config() {
+            const { proxy } = JSON.parse(readFileSync(\\"package.json\\", \\"utf-8\\"));
+            const publicUrl = process.env.PUBLIC_URL || \\"\\";
+            const basePath = publicUrl.startsWith(\\"http\\")
+                ? new URL(publicUrl).pathname
+                : publicUrl;
+            return {
+                server: {
+                    proxy: {
+                        \\"^.*\\": {
+                            target: proxy,
+                            changeOrigin: true,
+                            secure: false,
+                            ws: true,
+                            bypass(req) {
+                                const path = req.url || \\"\\";
+                                const pathWithoutBase = path.replace(new RegExp(\`^(\${basePath})?/\`), \\"\\");
+                                if (req.method !== \\"GET\\")
+                                    return;
+                                if (!req.headers.accept?.includes(\\"text/html\\") &&
+                                    !existsSync(resolve(\\"public\\", pathWithoutBase)) &&
+                                    ![
+                                        \\"src\\",
+                                        \\"@id\\",
+                                        \\"@fs\\",
+                                        \\"@vite\\",
+                                        \\"@react-refresh\\",
+                                        \\"node_modules\\",
+                                        \\"__open-in-editor\\",
+                                    ].includes(pathWithoutBase.split(\\"/\\")[0])) {
+                                    return;
+                                }
+                                return req.url;
+                            },
+                        },
+                    },
+                },
+            };
+        },
+    };
+}
+// Replace %ENV_VARIABLES% in index.html
+// https://vitejs.dev/guide/api-plugin.html#transformindexhtml
+function htmlPlugin(mode) {
+    const env = loadEnv(mode, \\".\\", [\\"REACT_APP_\\", \\"NODE_ENV\\", \\"PUBLIC_URL\\"]);
+    return {
+        name: \\"html-transform\\",
+        transformIndexHtml: {
+            enforce: \\"pre\\",
+            transform(html) {
+                return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
+            },
+        },
+    };
+}
+"
+`;
+
 exports[`createViteConfig > setupProxy: true 1`] = `
 "import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
@@ -900,7 +1094,7 @@ function htmlPlugin(mode) {
 
 exports[`createViteConfig > tsConfig: true 1`] = `
 "import { resolve } from \\"node:path\\";
-import { readFileSync } from \\"node:fs\\";
+import { readFileSync, existsSync } from \\"node:fs\\";
 import { defineConfig, loadEnv, Plugin } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
 import tsconfigPaths from \\"vite-tsconfig-paths\\";
@@ -922,6 +1116,7 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
+      
       
     ],
   };
@@ -1053,6 +1248,7 @@ function importPrefixPlugin(): Plugin {
 		},
 	};
 }
+
 
 
 // Replace %ENV_VARIABLES% in index.html
