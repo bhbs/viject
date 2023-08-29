@@ -1,18 +1,18 @@
 import { existsSync } from "node:fs";
-import { intro, outro, spinner, cancel, note } from "@clack/prompts";
+import { cancel, intro, note, outro, spinner } from "@clack/prompts";
+import { convertJS2JSX } from "./convert.js";
+import { overWriteDTS } from "./dts.js";
+import { checkGitStatus } from "./git.js";
+import { moveIndexHTML } from "./html.js";
+import { getOptions } from "./options.js";
+import { overWritePackageJson } from "./packageJson.js";
 import {
-	appViteConfigTs,
-	appViteConfigJs,
 	appIndexHTML,
+	appViteConfigJs,
+	appViteConfigTs,
 	oldIndexHTML,
 } from "./paths.js";
-import { convertJS2JSX } from "./convert.js";
-import { checkGitStatus } from "./git.js";
-import { overWritePackageJson } from "./packageJson.js";
-import { overWriteDTS } from "./dts.js";
-import { moveIndexHTML } from "./html.js";
 import { writeViteConfig } from "./viteConfig.js";
-import { getOptions } from "./options.js";
 
 const options = getOptions();
 

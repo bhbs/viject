@@ -2,12 +2,12 @@ import { existsSync, lstatSync, readFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import {
 	appJsConfig,
+	appPackageJson,
 	appSetupProxy,
 	appSetupTestsJs,
 	appSetupTestsTs,
 	appSrcDir,
 	appTsConfig,
-	appPackageJson,
 } from "./paths.js";
 
 export type Options = {
