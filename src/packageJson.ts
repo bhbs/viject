@@ -1,7 +1,7 @@
-import { EOL } from "node:os";
 import { readFileSync, writeFileSync } from "node:fs";
-import { appPackageJson, ownPackageJson } from "./paths.js";
+import { EOL } from "node:os";
 import { Options } from "./options.js";
+import { appPackageJson, ownPackageJson } from "./paths.js";
 
 export const overWritePackageJson = (options: Options) => {
 	const ownPackage = JSON.parse(readFileSync(ownPackageJson, "utf-8"));
@@ -27,11 +27,11 @@ export const overWritePackageJson = (options: Options) => {
 	appPackage.scripts = {
 		...appPackage.scripts,
 		dev: "vite",
-		start: appPackage.scripts["start"]?.includes("react-scripts start")
-			? appPackage.scripts["start"].replace("react-scripts start", "vite")
+		start: appPackage.scripts.start?.includes("react-scripts start")
+			? appPackage.scripts.start.replace("react-scripts start", "vite")
 			: "vite",
-		build: appPackage.scripts["build"]?.includes("react-scripts build")
-			? appPackage.scripts["build"].replace("react-scripts build", "vite build")
+		build: appPackage.scripts.build?.includes("react-scripts build")
+			? appPackage.scripts.build.replace("react-scripts build", "vite build")
 			: "vite build",
 	};
 
