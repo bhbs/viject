@@ -33,9 +33,6 @@
   },
   "scripts": {
     "ci": "biome ci src",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
     "lint": "npm run lint:cspell && npm run lint:biome",
     "lint:biome": "biome ci src",
     "lint:cspell": "cspell --gitignore '**'",
@@ -61,8 +58,6 @@
     "vite": "^4.4.9",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^3.5.0",
-    "vitepress": "1.0.0-rc.4",
-    "vitest": "^0.34.1",
-    "vue": "^3.3.4"
+    "vitest": "^0.34.1"
   }
 }

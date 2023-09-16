@@ -13,6 +13,12 @@ cd <YOUR_APP>
 npx viject
 ```
 
+## Concept
+
+Enables one-shot migration from CRA to Vite. Differences are absorbed in vite.config, allowing for a gradual migration with minimal changes.
+
+See more details in [doc](/docs/release.md)
+
 ## How it works
 
 1. Rewrite npm scripts
