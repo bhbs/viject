@@ -106,13 +106,14 @@ function devServerPlugin(): Plugin {
 					host: HOST || "localhost",
 					port: parseInt(PORT || "3000", 10),
 					open: true,
-					https:
-						https && SSL_CRT_FILE && SSL_KEY_FILE
-							? {
-									cert: readFileSync(resolve(SSL_CRT_FILE)),
-									key: readFileSync(resolve(SSL_KEY_FILE)),
-							  }
-							: https,
+					...(https &&
+						SSL_CRT_FILE &&
+						SSL_KEY_FILE && {
+							https: {
+								cert: readFileSync(resolve(SSL_CRT_FILE)),
+								key: readFileSync(resolve(SSL_KEY_FILE)),
+							},
+						}),
 				},
 			};
 		},
@@ -318,8 +319,7 @@ function htmlPlugin(mode: string): Plugin {
 	return {
 		name: "html-plugin",
 		transformIndexHtml: {
-			enforce: "pre",
-			transform(html) {
+			handler(html) {
 				return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
 			},
 		},

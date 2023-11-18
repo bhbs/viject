@@ -15,6 +15,7 @@ export const overWritePackageJson = (options: Options) => {
 		"@vitejs/plugin-react",
 		"vite",
 		...(options.svg ? ["@svgr/core", "@svgr/plugin-jsx"] : []),
+		...(options.tsConfig ? ["@types/node"] : []),
 		...(options.tsConfig || options.jsConfig ? ["vite-tsconfig-paths"] : []),
 	];
 
