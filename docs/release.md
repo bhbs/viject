@@ -254,11 +254,9 @@ https://www.npmjs.com/package/@vitejs/plugin-react
 
 `@vitejs/plugin-react` is all-in-one Vite plugin for React projects.
 
-#### vite-plugin-svgr
+#### @svgr/core-svgr / @svgr/plugin-jsx
 
-https://www.npmjs.com/package/vite-plugin-svgr
-
-In Create React App, SVGs can also be imported directly as React components. This is achieved by a library called svgr, which is also available in Vite. There is a useful plugin.
+In Create React App, SVGs can be imported directly as React components. This is achieved by svgr libraries.
 
 https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
 

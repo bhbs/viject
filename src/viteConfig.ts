@@ -197,7 +197,7 @@ function importPrefixPlugin(): Plugin {
 `;
 
 const svgrPlugin = `\
-// In Create React App, SVGs can also be imported directly as React components. This is achieved by a library called svgr.
+// In Create React App, SVGs can be imported directly as React components. This is achieved by svgr libraries.
 // https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
 function svgrPlugin(): Plugin {
   const filter = createFilter("**/*.svg");
