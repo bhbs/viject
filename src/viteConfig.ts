@@ -321,6 +321,7 @@ function htmlPlugin(mode: string): Plugin {
 	return {
 		name: "html-plugin",
 		transformIndexHtml: {
+			order: "pre",
 			handler(html) {
 				return html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match);
 			},
