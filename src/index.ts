@@ -66,7 +66,7 @@ convertJS2JSXStep.stop("Converting JS to JSX: Done");
 const nextSteps = `\
 // npm
 npm install
-npm dev
+npm run dev
 // yarn
 yarn install
 yarn dev
