@@ -1016,16 +1016,14 @@ function htmlPlugin(mode) {
 exports[`createViteConfig > svg: true 1`] = `
 "import { resolve } from \\"node:path\\";
 import { readFileSync } from \\"node:fs\\";
-import { defineConfig, loadEnv } from \\"vite\\";
+import { defineConfig, loadEnv, createFilter, transformWithEsbuild } from \\"vite\\";
 import react from \\"@vitejs/plugin-react\\";
-import svgr from \\"vite-plugin-svgr\\";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     setEnv(mode);
     return {
         plugins: [
             react(),
-            svgr(),
             envPlugin(),
             devServerPlugin(),
             sourcemapPlugin(),
@@ -1033,6 +1031,7 @@ export default defineConfig(({ mode }) => {
             basePlugin(),
             importPrefixPlugin(),
             htmlPlugin(mode),
+            svgrPlugin(),
         ],
     };
 });
@@ -1153,6 +1152,35 @@ function importPrefixPlugin() {
         },
     };
 }
+function svgrPlugin() {
+    const filter = createFilter(\\"**/*.svg\\");
+    const postfixRE = /[?#].*$/s;
+    return {
+        name: \\"svgr-plugin\\",
+        async transform(code, id) {
+            if (filter(id)) {
+                const { transform } = await import(\\"@svgr/core\\");
+                const { default: jsx } = await import(\\"@svgr/plugin-jsx\\");
+                const filePath = id.replace(postfixRE, \\"\\");
+                const svgCode = readFileSync(filePath, \\"utf8\\");
+                const componentCode = await transform(svgCode, undefined, {
+                    filePath,
+                    caller: {
+                        previousExport: code,
+                        defaultPlugins: [jsx],
+                    },
+                });
+                const res = await transformWithEsbuild(componentCode, id, {
+                    loader: \\"jsx\\",
+                });
+                return {
+                    code: res.code,
+                    map: null,
+                };
+            }
+        },
+    };
+}
 // Replace %ENV_VARIABLES% in index.html
 // https://vitejs.dev/guide/api-plugin.html#transformindexhtml
 // Migration guide: Follow the guide below, you may need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
@@ -1180,14 +1208,12 @@ import react from \\"@vitejs/plugin-react\\";
 import tsconfigPaths from \\"vite-tsconfig-paths\\";
 
 
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   setEnv(mode);
   return {
     plugins: [
       react(),
-      
       tsconfigPaths(),
       envPlugin(),
       devServerPlugin(),
@@ -1196,6 +1222,7 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
+      
       
       
     ],
@@ -1337,6 +1364,7 @@ function importPrefixPlugin(): Plugin {
 		},
 	};
 }
+
 
 
 

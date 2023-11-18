@@ -6,12 +6,13 @@ import { appViteConfigJs, appViteConfigTs } from "./paths.js";
 const importDirective = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
 import { resolve } from "node:path";
 import { readFileSync, existsSync } from "node:fs";
-import { defineConfig, loadEnv, Plugin } from "vite";
+import { defineConfig, loadEnv, Plugin${
+	svg ? ", createFilter, transformWithEsbuild" : ""
+} } from "vite";
 import react from "@vitejs/plugin-react";
 ${
 	tsConfig || jsConfig ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""
 }
-${svg ? 'import svgr from "vite-plugin-svgr";' : ""}
 ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
@@ -28,7 +29,6 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      ${svg ? "svgr()," : ""}
       ${tsConfig || jsConfig ? "tsconfigPaths()," : ""}
       envPlugin(),
       devServerPlugin(),
@@ -37,6 +37,7 @@ export default defineConfig(({ mode }) => {
       basePlugin(),
       importPrefixPlugin(),
       htmlPlugin(mode),
+      ${svg ? "svgrPlugin()," : ""}
       ${proxy ? "proxyPlugin()," : ""}
       ${setupProxy ? "setupProxyPlugin()," : ""}
     ],
@@ -194,6 +195,43 @@ function importPrefixPlugin(): Plugin {
 }
 `;
 
+const svgrPlugin = `\
+function svgrPlugin(): Plugin {
+  const filter = createFilter("**/*.svg");
+  const postfixRE = /[?#].*$/s;
+
+  return {
+    name: "svgr-plugin",
+    async transform(code, id) {
+      if (filter(id)) {
+        const { transform } = await import("@svgr/core");
+        const { default: jsx } = await import("@svgr/plugin-jsx");
+
+        const filePath = id.replace(postfixRE, "");
+        const svgCode = readFileSync(filePath, "utf8");
+
+        const componentCode = await transform(svgCode, undefined, {
+          filePath,
+          caller: {
+            previousExport: code,
+            defaultPlugins: [jsx],
+          },
+        });
+
+        const res = await transformWithEsbuild(componentCode, id, {
+          loader: "jsx",
+        });
+
+        return {
+          code: res.code,
+          map: null,
+        };
+      }
+    },
+  };
+}
+`;
+
 const proxyPlugin = `\
 // Configuring the Proxy in package.json
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/
@@ -300,6 +338,7 @@ ${sourcemapPlugin}
 ${buildPathPlugin}
 ${basePlugin}
 ${importPrefixPlugin}
+${options.svg ? svgrPlugin : ""}
 ${options.proxy ? proxyPlugin : ""}
 ${options.setupProxy ? setupProxyPlugin : ""}
 ${htmlPlugin}`;
