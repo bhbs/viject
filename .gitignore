@@ -7,3 +7,4 @@ dist
 
 /projects/*
 !/projects/kitchensink
+!/projects/jsconfig
