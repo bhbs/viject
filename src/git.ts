@@ -1,7 +1,7 @@
 import { execSync } from "node:child_process";
 
 export const checkGitStatus = () => {
-	let gitStatus;
+	let gitStatus = "";
 
 	try {
 		const stdout = execSync("git status --porcelain", {
