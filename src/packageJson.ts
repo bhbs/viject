@@ -19,11 +19,11 @@ export const overWritePackageJson = (options: Options) => {
 		...(options.tsConfig || options.jsConfig ? ["vite-tsconfig-paths"] : []),
 	];
 
-	Object.keys(ownPackage.devDependencies).forEach((key) => {
+	for (const key of Object.keys(ownPackage.devDependencies)) {
 		if (viteDeps.includes(key)) {
 			appPackage.devDependencies[key] = ownPackage.devDependencies[key];
 		}
-	});
+	}
 
 	appPackage.scripts = {
 		...appPackage.scripts,

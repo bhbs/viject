@@ -20,12 +20,12 @@ export const convertJS2JSX = () => {
 	const files = readdirSyncRecursively("src").filter((file) =>
 		/\.js$/.test(file),
 	);
-	files.forEach((file: string) => {
+	for (const file of files) {
 		const code = readFileSync(file, "utf-8");
 		if (isJsx(code)) {
 			renameSync(file, `${file}x`);
 		}
-	});
+	}
 };
 
 const readdirSyncRecursively = (directory: string): string[] => {
