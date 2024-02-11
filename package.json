@@ -57,7 +57,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "cspell": "^8.3.2",
     "happy-dom": "^13.2.0",
-    "vite": "^5.0.12",
+    "vite": "^5.1.1",
     "vite-tsconfig-paths": "^4.3.1",
     "vitest": "^1.2.1"
   }
