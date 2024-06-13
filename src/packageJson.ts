@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { EOL } from "node:os";
-import { Options } from "./options.js";
+import type { Options } from "./options.js";
 import { appPackageJson, ownPackageJson } from "./paths.js";
 
 export const overWritePackageJson = (options: Options) => {
