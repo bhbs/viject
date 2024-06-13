@@ -1,6 +1,6 @@
 import { writeFileSync } from "node:fs";
 import typescript from "typescript";
-import { Options } from "./options.js";
+import type { Options } from "./options.js";
 import { appViteConfigJs, appViteConfigTs } from "./paths.js";
 
 const importDirective = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
@@ -353,7 +353,7 @@ ${htmlPlugin}`;
 					target: typescript.ScriptTarget.ESNext,
 					module: typescript.ModuleKind.ESNext,
 				},
-		  }).outputText;
+			}).outputText;
 };
 
 export const writeViteConfig = (options: Options) => {

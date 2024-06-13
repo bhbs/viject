@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import { EOL } from "os";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { EOL } from "node:os";
 import { appTypeDeclarations, ownTypeDeclarations } from "./paths.js";
 
 export const overWriteDTS = () => {
