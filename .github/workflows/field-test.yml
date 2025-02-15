@@ -31,6 +31,8 @@ jobs:
         with:
           path: "node_modules"
           key: ${{ hashFiles('package-lock.json') }}
+      - if: contains('typescript, redux', matrix.template)
+        run: npm config set legacy-peer-deps true
       - run: npm run build
       - run: npx --yes create-react-app projects/${{ matrix.template }} --template ${{ matrix.template }}
       - run: |
