@@ -29,7 +29,7 @@
     "dist"
   ],
   "engines": {
-    "node": "^18.0.0 || >=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
     "ci": "biome ci src",
@@ -54,10 +54,10 @@
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@types/node": "^22.15.19",
-    "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-react": "^4.6.0",
     "cspell": "^9.0.2",
     "happy-dom": "^17.4.7",
-    "vite": "^6.3.5",
+    "vite": "^7.0.0",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^3.1.4"
   }
