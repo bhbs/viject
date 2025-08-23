@@ -1,12 +1,16 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.0.0/schema.json",
-	"organizeImports": {
-		"enabled": true
-	},
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
 	"linter": {
-		"enabled": true,
 		"rules": {
-			"recommended": true
+			"correctness": {
+				"useExhaustiveDependencies": "off",
+				"useUniqueElementIds": "off"
+			}
 		}
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
 	}
 }

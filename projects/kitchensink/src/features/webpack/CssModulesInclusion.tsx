@@ -1,6 +1,5 @@
-import React from "react";
-import styles from "./assets/style.module.css";
 import indexStyles from "./assets/index.module.css";
+import styles from "./assets/style.module.css";
 
 export const CssModulesInclusion = () => (
 	<div id="feature-css-modules-inclusion">

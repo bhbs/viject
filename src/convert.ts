@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, renameSync } from "node:fs";
+import { readdirSync, readFileSync, renameSync } from "node:fs";
 import { Parser } from "acorn";
 import jsx from "acorn-jsx";
 

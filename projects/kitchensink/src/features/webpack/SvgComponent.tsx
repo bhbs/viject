@@ -6,5 +6,5 @@ export const SvgComponent = () => {
 };
 
 export const SvgComponentWithRef = React.forwardRef<SVGSVGElement>(
-	(props, ref) => <Logo id="feature-svg-component-with-ref" ref={ref} />,
+	(_props, ref) => <Logo id="feature-svg-component-with-ref" ref={ref} />,
 );

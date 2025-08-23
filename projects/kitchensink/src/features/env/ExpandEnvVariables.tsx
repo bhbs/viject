@@ -1,5 +1,3 @@
-import React from "react";
-
 export const ExpandEnvVariables = () => (
 	<ul id="feature-expand-env-variables">
 		<li id="feature-expand-env-1">{process.env.REACT_APP_BASIC}</li>

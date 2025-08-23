@@ -1,5 +1,3 @@
-import React from "react";
-
 export const FileEnvVariables = () => (
 	<ul id="feature-file-env-variables">
 		<li id="feature-file-env-original-1">{process.env.REACT_APP_ORIGINAL_1}</li>
