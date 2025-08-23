@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Options } from "../src/options";
+import type { Options } from "../src/options";
 import { createViteConfig } from "../src/viteConfig";
 
 const defaultOptions: Options = {

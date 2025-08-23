@@ -1,4 +1,3 @@
-import React from "react";
 import abstractJson from "./assets/abstract.json";
 
 const { abstract } = abstractJson;

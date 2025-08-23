@@ -1,4 +1,3 @@
-import React from "react";
 import tiniestCat from "./assets/tiniest-cat.jpg";
 
 export const ImageInclusion = () => (

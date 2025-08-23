@@ -1,4 +1,3 @@
-import React from "react";
 import { absoluteLoad } from "absoluteLoad";
 
 export const BaseUrl = () => {

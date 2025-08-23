@@ -1,1 +1,1 @@
-export const absoluteLoad = 'absoluteLoad'
+export const absoluteLoad = "absoluteLoad";

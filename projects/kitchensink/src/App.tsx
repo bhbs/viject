@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { BaseUrl } from "./features/config/BaseUrl";
 import { ProxyMiddleware } from "./features/config/ProxyMiddleware";
 import { ExpandEnvVariables } from "./features/env/ExpandEnvVariables";
@@ -15,8 +15,8 @@ import { SassModulesInclusion } from "./features/webpack/SassModulesInclusion";
 import { ScssInclusion } from "./features/webpack/ScssInclusion";
 import { ScssModulesInclusion } from "./features/webpack/ScssModulesInclusion";
 import { SvgComponent } from "./features/webpack/SvgComponent";
-import { SvgInclusion } from "./features/webpack/SvgInclusion";
 import { SvgInCss } from "./features/webpack/SvgInCss";
+import { SvgInclusion } from "./features/webpack/SvgInclusion";
 
 // removed:
 //   LinkedModules

@@ -1,4 +1,3 @@
-import React from "react";
 import "./assets/sass-styles.sass";
 
 export const SassInclusion = () => (
