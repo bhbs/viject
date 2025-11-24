@@ -7,7 +7,7 @@ jobs:
     name: Prepare node_modules cache
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare-cache
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare-cache
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare-cache
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare-cache
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
