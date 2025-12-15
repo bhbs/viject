@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         id: node_modules_cache
         with:
           path: "node_modules"
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: "node_modules"
           key: node_modules-${{ hashFiles('package-lock.json') }}
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: "node_modules"
           key: node_modules-${{ hashFiles('package-lock.json') }}
@@ -61,7 +61,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: "node_modules"
           key: node_modules-${{ hashFiles('package-lock.json') }}
@@ -77,7 +77,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: "node_modules"
           key: node_modules-${{ hashFiles('package-lock.json') }}
