@@ -6,13 +6,11 @@ import { appViteConfigJs, appViteConfigTs } from "./paths.js";
 const importDirective = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
 import { resolve } from "node:path";
 import { readFileSync, existsSync } from "node:fs";
-import { defineConfig, loadEnv, Plugin${
-	svg ? ", createFilter, transformWithEsbuild" : ""
-} } from "vite";
+import { defineConfig, loadEnv, Plugin${svg ? ", createFilter, transformWithOxc" : ""
+	} } from "vite";
 import react from "@vitejs/plugin-react";
-${
-	tsConfig || jsConfig ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""
-}
+${tsConfig || jsConfig ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""
+	}
 ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
@@ -221,8 +219,8 @@ function svgrPlugin(): Plugin {
           },
         });
 
-        const res = await transformWithEsbuild(componentCode, id, {
-          loader: "jsx",
+        const res = await transformWithOxc(componentCode, id, {
+          lang: "jsx",
         });
 
         return {
@@ -349,11 +347,11 @@ ${htmlPlugin}`;
 	return options.tsConfig
 		? config
 		: typescript.transpileModule(config, {
-				compilerOptions: {
-					target: typescript.ScriptTarget.ESNext,
-					module: typescript.ModuleKind.ESNext,
-				},
-			}).outputText;
+			compilerOptions: {
+				target: typescript.ScriptTarget.ESNext,
+				module: typescript.ModuleKind.ESNext,
+			},
+		}).outputText;
 };
 
 export const writeViteConfig = (options: Options) => {
