@@ -37,6 +37,7 @@
 		"lint:biome": "biome lint .",
 		"lint:cspell": "cspell --gitignore '**'",
 		"format:biome": "biome format .",
+		"fix": "biome check --write .",
 		"ts": "tsc",
 		"build": "tsc",
 		"test:e2e": "playwright test",
