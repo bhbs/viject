@@ -16,7 +16,7 @@ export const overWritePackageJson = (options: Options) => {
 		"vite",
 		...(options.svg ? ["@svgr/core", "@svgr/plugin-jsx"] : []),
 		...(options.tsConfig ? ["@types/node"] : []),
-		...(options.tsConfig || options.jsConfig ? ["vite-tsconfig-paths"] : []),
+		...(options.jsConfig ? ["vite-tsconfig-paths"] : []),
 	];
 
 	for (const key of Object.keys(ownPackage.devDependencies)) {
