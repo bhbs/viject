@@ -3,16 +3,14 @@ import typescript from "typescript";
 import type { Options } from "./options.js";
 import { appViteConfigJs, appViteConfigTs } from "./paths.js";
 
-const importDirective = ({ tsConfig, jsConfig, svg, setupProxy }: Options) => `\
+const importDirective = ({ jsConfig, svg, setupProxy }: Options) => `\
 import { resolve } from "node:path";
 import { readFileSync, existsSync } from "node:fs";
 import { defineConfig, loadEnv, Plugin${
 	svg ? ", createFilter, transformWithOxc" : ""
 } } from "vite";
 import react from "@vitejs/plugin-react";
-${
-	tsConfig || jsConfig ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""
-}
+${jsConfig ? 'import tsconfigPaths from "vite-tsconfig-paths";' : ""}
 ${setupProxy ? 'import setupProxy from "./src/setupProxy";' : ""}
 `;
 
@@ -29,7 +27,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       react(),
-      ${tsConfig || jsConfig ? "tsconfigPaths()," : ""}
+      ${jsConfig ? "tsconfigPaths()," : ""}
       envPlugin(),
       devServerPlugin(),
       sourcemapPlugin(),
@@ -41,6 +39,7 @@ export default defineConfig(({ mode }) => {
       ${proxy ? "proxyPlugin()," : ""}
       ${setupProxy ? "setupProxyPlugin()," : ""}
     ],
+		${tsConfig ? "resolve: { tsconfigPaths: true }," : ""}
   };
 });
 `;
