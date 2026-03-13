@@ -59,7 +59,7 @@
 		"cspell": "^9.7.0",
 		"happy-dom": "^20.8.4",
 		"vite": "^8.0.0",
-		"vite-tsconfig-paths": "^4.3.2",
+		"vite-tsconfig-paths": "^6.1.1",
 		"vitest": "^4.1.0"
 	}
 }
