@@ -2,6 +2,9 @@ name: Publish Package to npmjs
 on:
   release:
     types: [created]
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +20,5 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - id: version
         run: echo VERSION=$(npm pkg get version | tr -d '"') >> $GITHUB_OUTPUT
