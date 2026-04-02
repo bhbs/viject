@@ -1,48 +1,46 @@
-# A tool for migrating your React app from react-scripts (Create React App) to Vite
+# Migrate your React app from `react-scripts` (Create React App) to Vite
 
-Switch to Vite in one-shot!
+Viject helps you move a Create React App project to Vite in one shot.
 
 ```sh
 # cd <YOUR_APP>
 npx viject
-# and run install command
+# then run your package manager's install command
 ```
 
-Now you can start developing!
+After that, you can start developing with Vite:
 
 ```sh
-# dev
+# dev server
 npm run dev
-# build
+# production build
 npm run build
 ```
 
-Happy hacking! 👋
+If something goes wrong, open an issue:
+https://github.com/bhbs/viject/issues
 
-or something went wrong? Ask me https://github.com/bhbs/viject/issues
+## Why Viject exists
 
-## Current status of Create React App and description of Viject
-
-Recently, maintenance of Create React App has stalled, and there are no plans for active development in the future.
+Create React App maintenance has effectively stalled, and there are no plans for active future development:
 
 https://github.com/reactjs/react.dev/pull/5487#issuecomment-1409720741
 
-However, I still maintain Create React App-based applications at work. While I have looked at some migration guides, they did not fully meet the needs of my specific application. As a result, I created a migration tool to Vite.
+I still maintain Create React App applications at work, and while I reviewed several migration guides, none of them matched the needs of my project closely enough. Viject was built to make that migration practical.
 
-Viject is designed to bridge the gap between Create React App and Vite by using the vite.config file and gradually removing plugins as time allows after the migration.
+Viject is designed to bridge Create React App and Vite by absorbing compatibility differences into `vite.config`, so you can migrate quickly first and remove compatibility layers gradually later.
 
-The "eject" command in Create React App allows react-scripts to be removed with a single command. I have named my tool Viject, which is a play on words combining "Vite" and "eject".
+The name is a play on Create React App's `eject` command: `Vite` + `eject` = `Viject`.
 
-While my requirements have been met, Create React App is a complex tool with many features. If your specific requirements are not met, please let me know by raising an issue. I am interested in resolving any problems you may encounter.
+Create React App is a large tool with a lot of behavior, so there may still be cases Viject does not cover yet. If you run into one, please open an issue. I want to keep improving compatibility.
 
-This article will provide a detailed description of the process involved in using Viject.
+This document explains the approach Viject takes.
 
-## vite.config.ts compatible with react-scripts
+## `vite.config.ts` compatibility with `react-scripts`
 
 ### Load environment variables
 
-
-As with Create React App, dotenv expands are used internally in Vite. Use define to load in the Application.
+Like Create React App, Vite uses dotenv expansion internally. Viject uses `define` so the app can continue reading compatible environment variables.
 
 ```js
 function envPlugin() {
@@ -63,12 +61,12 @@ function envPlugin() {
 }
 ```
 
-https://vitejs.dev/config/shared-options.html#define
+https://vite.dev/config/shared-options.html#define
 https://create-react-app.dev/docs/adding-custom-environment-variables/#what-other-env-files-can-be-used
 
-### Setup HOST, PORT and SSL
+### Configure `HOST`, `PORT`, and SSL
 
-Can be configured by setting `server`.
+This can be configured through `server`.
 
 ```js
 function devServerPlugin() {
@@ -100,13 +98,11 @@ function devServerPlugin() {
 }
 ```
 
-https://vitejs.dev/config/server-options.html#server-https
+https://vite.dev/config/server-options.html#server-https
 
+### Support source maps
 
-### Support sourcemap
-
-Can be supported by enabling `build.sourcemap`.
-Use GENERATE_SOURCEMAP for Create React App compatibility.
+Enable `build.sourcemap` and use `GENERATE_SOURCEMAP` for Create React App compatibility.
 
 ```js
 function sourcemapPlugin() {
@@ -124,12 +120,11 @@ function sourcemapPlugin() {
 }
 ```
 
-https://vitejs.dev/config/build-options.html#build-sourcemap
+https://vite.dev/config/build-options.html#build-sourcemap
 
-### Change output dir
+### Change the output directory
 
-This can be changed by setting `build.outDir`.
-Use BUILD_PATH for Create React App compatibility.
+Set `build.outDir` and use `BUILD_PATH` for Create React App compatibility.
 
 ```js
 function buildPathPlugin() {
@@ -147,12 +142,11 @@ function buildPathPlugin() {
 }
 ```
 
-https://vitejs.dev/config/build-options.html#build-outdir
+https://vite.dev/config/build-options.html#build-outdir
 
-### Change basePath
+### Change the base path
 
-This can be changed by setting the `base`.
-Use PUBLIC_URL for Create React App compatibility.
+Set `base` and use `PUBLIC_URL` for Create React App compatibility.
 
 ```js
 function basePlugin() {
@@ -168,11 +162,11 @@ function basePlugin() {
 }
 ```
 
-https://vitejs.dev/config/shared-options.html#base
+https://vite.dev/config/shared-options.html#base
 
-### Import with `~`
+### Support `~` imports
 
-To resolve modules from node_modules, you can prefix paths with ~ in Create React App. Same functionality can be achieved by setting `resolve.alias`.
+Create React App allows `~` as a prefix when resolving modules from `node_modules`. The same behavior can be reproduced with `resolve.alias`.
 
 ```js
 function importPrefixPlugin() {
@@ -189,17 +183,15 @@ function importPrefixPlugin() {
 }
 ```
 
-https://vitejs.dev/config/shared-options.html#resolve-alias
+https://vite.dev/config/shared-options.html#resolve-alias
 
+### Support `setupProxy.js`
 
-### Support setupProxy.js
+This can be implemented with the `configureServer` hook.
 
-It can be configured by using `configureServer` Hook.
-
-There is an issue with using the http-proxy module that Vite utilizes for proxying, as it does not support HTTP/2. As a result, Vite falls back to using HTTP/1 when a proxy is configured. Fortunately, this HTTP/1 server still supports HTTPS, so leaving the proxy configuration empty will allow you to use a proxy with HTTPS.
+Vite uses `http-proxy` for proxying, and that library does not support HTTP/2. When a proxy is configured, Vite falls back to HTTP/1. That server still supports HTTPS, so an empty proxy configuration is enough to keep HTTPS proxy behavior available.
 
 https://github.com/vitejs/vite/issues/484
-
 
 ```js
 function setupProxyPlugin() {
@@ -217,12 +209,11 @@ function setupProxyPlugin() {
 }
 ```
 
-https://vitejs.dev/guide/api-plugin.html#configureserver
+https://vite.dev/guide/api-plugin.html#configureserver
 
+### Support `%ENV_VARIABLES%` in `index.html`
 
-### Support %ENV_VARIABLES% in index.html
-
-It can be replaced by using transformIndexHtml Hook.
+This can be implemented with the `transformIndexHtml` hook.
 
 ```js
 function htmlPlugin(mode) {
@@ -239,57 +230,57 @@ function htmlPlugin(mode) {
 }
 ```
 
-https://vitejs.dev/guide/api-plugin.html#transformindexhtml
+https://vite.dev/guide/api-plugin.html#transformindexhtml
 
-## Changes that cannot be configured by vite.config
+## Changes that cannot be handled only in `vite.config`
 
 ### 1. Add dependencies
 
-Edit package.json
+Update `package.json`.
 
-#### Vite / @vitejs/plugin-react
+#### `vite` / `@vitejs/plugin-react`
 
 https://www.npmjs.com/package/vite
 https://www.npmjs.com/package/@vitejs/plugin-react
 
-`@vitejs/plugin-react` is all-in-one Vite plugin for React projects.
+`@vitejs/plugin-react` is the all-in-one Vite plugin for React projects.
 
-#### @svgr/core-svgr / @svgr/plugin-jsx
+#### `@svgr/core-svgr` / `@svgr/plugin-jsx`
 
-In Create React App, SVGs can be imported directly as React components. This is achieved by svgr libraries.
+In Create React App, SVG files can be imported directly as React components. That behavior depends on SVGR libraries.
 
 https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
 
-#### vite-tsconfig-paths
+#### `vite-tsconfig-paths`
 
 https://www.npmjs.com/package/vite-tsconfig-paths
 
-`vite-tsconfig-paths` gives Vite the ability to resolve imports using path mapping (jsconfig.json / tsconfig.json).
+`vite-tsconfig-paths` lets Vite resolve imports from `jsconfig.json` or `tsconfig.json` path mappings.
 
-### 2. Move index.html
+### 2. Move `index.html`
 
-https://vitejs.dev/guide/#index-html-and-project-root
+https://vite.dev/guide/#index-html-and-project-root
 
-In Vite, the rule is to place index.html in the root as the application entry point. In Create React App, the rule is to place it in public/index.html, so it needs to be moved.
+In Vite, `index.html` is part of the application entry point and lives at the project root. In Create React App, it lives at `public/index.html`, so it must be moved.
 
-### 3. Add react-app.d.ts
+### 3. Add `react-app.d.ts`
 
-When the eject command in react-scripts is used, react-app.d.ts is created. Add the same.
+When you run `eject` in `react-scripts`, `react-app.d.ts` is generated. Viject adds an equivalent file.
 
 https://github.com/facebook/create-react-app/blob/main/packages/react-scripts/lib/react-app.d.ts
 
-### 4. Convert js to jsx
+### 4. Convert `.js` files containing JSX to `.jsx`
 
-Checking whether a file with a js extension contains JSX is detrimental to build performance, so Vite requires the extension to be changed if it contains jsx.
+Checking whether a `.js` file contains JSX hurts build performance, so Vite expects JSX files to use the `.jsx` extension.
 
 https://github.com/vitejs/vite/discussions/3112#discussioncomment-650030
 
-### 5. Update npm-scripts
+### 5. Update npm scripts
 
-In Create React App, the command to build the development server was `start`. In Vite, `dev`.
+In Create React App, the development command is `start`. In Vite, it is `dev`.
 
 ## Appendix
 
 - https://github.com/bhbs/viject
 - https://github.com/facebook/create-react-app
-- https://vitejs.dev/guide/
+- https://vite.dev/guide/
