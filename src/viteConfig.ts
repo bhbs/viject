@@ -21,7 +21,7 @@ const defineConfig = ({
 	proxy,
 	setupProxy,
 }: Options) => `\
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   setEnv(mode);
   return {
@@ -63,9 +63,10 @@ function setEnv(mode: string) {
 `;
 
 const envPlugin = `\
-// Expose \`process.env\` environment variables to your client code
-// Migration guide: Follow the guide below to replace process.env with import.meta.env in your app, you may also need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
-// https://vitejs.dev/guide/env-and-mode.html#env-variables
+// Expose \`process.env\` variables to client-side code.
+// Migration guide: Replace \`process.env\` with \`import.meta.env\` in your app.
+// You may also need to rename variables from the \`REACT_APP_\` prefix to \`VITE_\`.
+// https://vite.dev/guide/env-and-mode.html#env-variables
 function envPlugin(): Plugin {
   return {
     name: "env-plugin",
@@ -85,11 +86,11 @@ function envPlugin(): Plugin {
 `;
 
 const devServerPlugin = `\
-// Setup HOST, SSL, PORT
-// Migration guide: Follow the guides below
-// https://vitejs.dev/config/server-options.html#server-host
-// https://vitejs.dev/config/server-options.html#server-https
-// https://vitejs.dev/config/server-options.html#server-port
+// Configure HOST, HTTPS, and PORT.
+// Migration guide:
+// https://vite.dev/config/server-options.html#server-host
+// https://vite.dev/config/server-options.html#server-https
+// https://vite.dev/config/server-options.html#server-port
 function devServerPlugin(): Plugin {
 	return {
 		name: "dev-server-plugin",
@@ -121,8 +122,8 @@ function devServerPlugin(): Plugin {
 `;
 
 const sourcemapPlugin = `\
-// Migration guide: Follow the guide below
-// https://vitejs.dev/config/build-options.html#build-sourcemap
+// Migration guide:
+// https://vite.dev/config/build-options.html#build-sourcemap
 function sourcemapPlugin(): Plugin {
 	return {
 		name: "sourcemap-plugin",
@@ -141,8 +142,8 @@ function sourcemapPlugin(): Plugin {
 `;
 
 const buildPathPlugin = `\
-// Migration guide: Follow the guide below
-// https://vitejs.dev/config/build-options.html#build-outdir
+// Migration guide:
+// https://vite.dev/config/build-options.html#build-outdir
 function buildPathPlugin(): Plugin {
 	return {
 		name: "build-path-plugin",
@@ -161,8 +162,8 @@ function buildPathPlugin(): Plugin {
 `;
 
 const basePlugin = `\
-// Migration guide: Follow the guide below and remove homepage field in package.json
-// https://vitejs.dev/config/shared-options.html#base
+// Migration guide: Follow the guide below and remove the \`homepage\` field from \`package.json\`.
+// https://vite.dev/config/shared-options.html#base
 function basePlugin(): Plugin {
 	return {
 		name: "base-plugin",
@@ -177,10 +178,10 @@ function basePlugin(): Plugin {
 `;
 
 const importPrefixPlugin = `\
-// To resolve modules from node_modules, you can prefix paths with ~
+// Prefix imports with \`~\` to resolve modules from \`node_modules\`, like in Create React App.
 // https://create-react-app.dev/docs/adding-a-sass-stylesheet
-// Migration guide: Follow the guide below
-// https://vitejs.dev/config/shared-options.html#resolve-alias
+// Migration guide:
+// https://vite.dev/config/shared-options.html#resolve-alias
 function importPrefixPlugin(): Plugin {
 	return {
 		name: "import-prefix-plugin",
@@ -196,7 +197,8 @@ function importPrefixPlugin(): Plugin {
 `;
 
 const svgrPlugin = `\
-// In Create React App, SVGs can be imported directly as React components. This is achieved by svgr libraries.
+// Create React App supports importing SVGs directly as React components.
+// This behavior is implemented with SVGR.
 // https://create-react-app.dev/docs/adding-images-fonts-and-files/#adding-svgs
 function svgrPlugin(): Plugin {
   const filter = createFilter("**/*.svg");
@@ -235,10 +237,10 @@ function svgrPlugin(): Plugin {
 `;
 
 const proxyPlugin = `\
-// Configuring the Proxy in package.json
+// Support the \`proxy\` field in \`package.json\`.
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/
-// Migration guide: Follow the guide below and remove proxy field in package.json
-// https://vitejs.dev/config/server-options.html#server-proxy
+// Migration guide: Follow the guide below and remove the \`proxy\` field from \`package.json\`.
+// https://vite.dev/config/server-options.html#server-proxy
 function proxyPlugin(): Plugin {
 	return {
 		name: "proxy-plugin",
@@ -290,11 +292,11 @@ function proxyPlugin(): Plugin {
 `;
 
 const setupProxyPlugin = `\
-// Configuring the Proxy Manually
+// Support manual proxy configuration through \`src/setupProxy\`.
 // https://create-react-app.dev/docs/proxying-api-requests-in-development/#configuring-the-proxy-manually
-// https://vitejs.dev/guide/api-plugin.html#configureserver
-// Migration guide: Follow the guide below and remove src/setupProxy
-// https://vitejs.dev/config/server-options.html#server-proxy
+// https://vite.dev/guide/api-plugin.html#configureserver
+// Migration guide: Follow the guide below and remove \`src/setupProxy\`.
+// https://vite.dev/config/server-options.html#server-proxy
 function setupProxyPlugin(): Plugin {
 	return {
 		name: "setup-proxy-plugin",
@@ -311,10 +313,11 @@ function setupProxyPlugin(): Plugin {
 `;
 
 const htmlPlugin = `\
-// Replace %ENV_VARIABLES% in index.html
-// https://vitejs.dev/guide/api-plugin.html#transformindexhtml
-// Migration guide: Follow the guide below, you may need to rename your environment variable to a name that begins with VITE_ instead of REACT_APP_
-// https://vitejs.dev/guide/env-and-mode.html#html-env-replacement
+// Replace \`%ENV_VARIABLES%\` in \`index.html\`.
+// https://vite.dev/guide/api-plugin.html#transformindexhtml
+// Migration guide: Follow the guide below.
+// You may also need to rename variables from the \`REACT_APP_\` prefix to \`VITE_\`.
+// https://vite.dev/guide/env-and-mode.html#html-env-replacement
 function htmlPlugin(mode: string): Plugin {
 	const env = loadEnv(mode, ".", ["REACT_APP_", "NODE_ENV", "PUBLIC_URL"]);
 	return {

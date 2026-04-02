@@ -36,6 +36,7 @@
 		"lint": "npm run lint:cspell && npm run lint:biome",
 		"lint:biome": "biome lint .",
 		"lint:cspell": "cspell --gitignore '**'",
+		"format": "npm run format:biome",
 		"format:biome": "biome format .",
 		"fix": "biome check --write .",
 		"ts": "tsc",

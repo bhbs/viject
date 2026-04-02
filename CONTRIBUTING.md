@@ -1,38 +1,46 @@
-# Contribution Guide
+# Contributing to Viject
 
-Hi! We're really excited that you're interested in contributing to Viject!
+Thanks for your interest in contributing to Viject.
 
-## Contribute
+## Ways to contribute
 
-I truly appreciate contributions in the form of:
+Contributions of all sizes are welcome, including:
 
 - Fixing typos
-- Improving docs
-- Refactoring codes
+- Improving documentation
+- Refactoring code
 - Opening [issues](https://github.com/bhbs/viject/issues)
 - Triaging issues
-- Sharing your opinion on issues.
+- Sharing feedback on issues
 
-## Issues
+## Reporting issues
 
-- If you're reporting a bug, include as much information as possible. Ideally, include a test case that reproduces the bug. For example, a [Runkit](https://runkit.com) or [repl.it](https://repl.it) playground.
+If you are reporting a bug, include as much detail as possible. A minimal reproduction is especially helpful. For example, you can share a small repro using [RunKit](https://runkit.com) or [replit](https://replit.com).
 
-## 👨‍💻 Setup
+## Setup
 
 ```sh
 npm ci
 ```
 
-## 🧪 Develop
+## Development
 
-To test:
+Run tests with:
 
 ```sh
+npm run test:e2e
+npm run test:unit -- -u
 npm run test:integration
 ```
 
-To check code style:
+Check code style with:
 
 ```sh
 npm run lint
+```
+
+Format code with:
+
+```sh
+npm run format
 ```
