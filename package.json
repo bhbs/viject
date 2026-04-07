@@ -46,22 +46,22 @@
 		"test:integration": "./tests/scripts/exec.sh"
 	},
 	"dependencies": {
-		"@clack/prompts": "^1.1.0",
+		"@clack/prompts": "^1.2.0",
 		"acorn": "^8.16.0",
 		"acorn-jsx": "^5.3.2",
-		"typescript": "^5.9.3"
+		"typescript": "^6.0.2"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.6",
-		"@playwright/test": "^1.58.2",
+		"@biomejs/biome": "2.4.10",
+		"@playwright/test": "^1.59.1",
 		"@svgr/core": "^8.1.0",
 		"@svgr/plugin-jsx": "^8.1.0",
-		"@types/node": "^25.5.0",
-		"@vitejs/plugin-react": "^6.0.0",
-		"cspell": "^9.7.0",
-		"happy-dom": "^20.8.4",
-		"vite": "^8.0.0",
+		"@types/node": "^25.5.2",
+		"@vitejs/plugin-react": "^6.0.1",
+		"cspell": "^10.0.0",
+		"happy-dom": "^20.8.9",
+		"vite": "^8.0.6",
 		"vite-tsconfig-paths": "^6.1.1",
-		"vitest": "^4.1.0"
+		"vitest": "^4.1.3"
 	}
 }
