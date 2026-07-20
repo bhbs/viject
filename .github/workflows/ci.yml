@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - uses: actions/cache@v5
@@ -26,7 +26,7 @@ jobs:
     needs: prepare-cache
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - uses: actions/cache@v5
@@ -42,7 +42,7 @@ jobs:
     needs: prepare-cache
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - uses: actions/cache@v5
@@ -58,7 +58,7 @@ jobs:
     needs: prepare-cache
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - uses: actions/cache@v5
@@ -74,7 +74,7 @@ jobs:
     needs: prepare-cache
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - uses: actions/cache@v5
